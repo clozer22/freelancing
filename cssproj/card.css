@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+
+
+section {
+  padding-block: min(20vh, 2rem);
+  width: calc(min(76.5rem, 90%));
+  margin-inline: auto;
+  color: #111;
+}
+section h2 {
+  text-transform: capitalize;
+  letter-spacing: 0.025em;
+  font-size: clamp(2rem, 1.8125rem + 0.75vw, 2.6rem);
+}
+section a {
+  display: inline-block;
+  text-decoration: none;
+}
+section .containerd {
+  margin-top: 5em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 2rem;
+}
+section .containerd .card:nth-child(1) .box .icon .iconBox {
+  background: #d3b19a;
+}
+section .containerd .card:nth-child(2) .box .icon .iconBox {
+  background: #70b3b1;
+}
+section .containerd .card:nth-child(3) .box .icon .iconBox {
+  background: #d05fa2;
+}
+section .containerd .card ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+section .containerd .card ul li {
+  text-transform: uppercase;
+  background: var(--clr-tag);
+  color: #282828;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.188rem;
+}
+section .containerd .card ul .branding {
+  color: #704a31;
+}
+section .containerd .card ul .packaging {
+  color: #1e3938;
+}
+section .containerd .card ul .marketing {
+  color: #4d1637;
+}
+section .containerd .card .content {
+  padding: 0.938rem 0.625rem;
+}
+section .containerd .card .content h3 {
+  text-transform: capitalize;
+  font-size: clamp(1.5rem, 1.3909rem + 0.4364vw, 1.8rem);
+}
+section .containerd .card .content p {
+  margin: 0.625rem 0 1.25rem;
+  color: #565656;
+}
+section .containerd .card-inner {
+  position: relative;
+  width: inherit;
+  height: 10.75rem;
+  background: var(--clr);
+  border-radius: 1.25rem;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+}
+section .containerd .card-inner .box {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+section .containerd .card-inner .box .imgBox {
+  position: absolute;
+}
+section .containerd .card-inner .box .imgBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

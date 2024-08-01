@@ -1,0 +1,247 @@
+@import url("./style.css"); /* Using a url */
+/* ADD CART */
+.item-preview:before, .row:before, .wrap:before, .item-preview:after, .row:after, .wrap:after {
+    content: "";
+    display: table;
+  }
+  .item-preview:after, .row:after, .wrap:after {
+    clear: both;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    color: #1e1d1d;
+    font: 1.125em/1.4 "Signika", sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .wrap {
+    background-color: #fff;
+    max-width: 81%;
+    margin: auto;
+  }
+  
+  h4,
+  .h4 {
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 1.4em 0;
+  }
+  
+  a {
+    color: #1e1d1d;
+    color: rgba(30, 29, 29, 0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  a:focus, a:active, a:hover {
+    color: inherit;
+  }
+  
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  label {
+      font-size: 100%;
+      text-transform: capitalize;
+      font-weight: bold;
+  }
+  
+  input,
+  select{
+    border: 1px solid #beb7b9;
+    border-radius: 0.3em;
+    margin-bottom: 1.4em;
+    font-size: 15px;
+    max-width: 100%;
+    padding: 0.35em;
+    width: 100%;
+    transition: border-color 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  }
+  input:focus, input:active,
+  select:focus,
+  select:active {
+    border-color: #2c53b7;
+  }
+  
+  .row {
+    margin: 0 -0.5em;
+    width: auto;
+  }
+  
+  .col {
+    float: left;
+    padding: 0 0.5em;
+    width: 100%;
+  }
+  
+  @media only screen and (min-width: 50em) {
+    .col-lg-3-4 {
+      width: 75%;
+    }
+  
+    .col-lg-1-4 {
+      width: 25%;
+    }
+  }
+  /* BUTTONS */
+  .btn {
+    border-radius: 0.3em;
+    border: none;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.15);
+    margin: 2px 0px 0px 166px;
+    color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    padding:15px 25px;
+    position: relative;
+    text-align: center;
+    transition: all 0.3s;
+    z-index: 1;
+  }
+  
+  .btn-circle {
+    border-radius: 25em;
+    height: 2em;
+    width: 2em;
+    padding: 0.7em;
+  }
+  
+  .btn-primary {
+    background-color: #d52223;
+    color: #fff;
+  }
+  .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
+    background-color: #a81112;
+    color: #fff;
+  }
+  
+  .rating-stars {
+    color: #f7c80c;
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .rating-stars > li {
+    display: inline;
+  }
+  
+  .rating-no {
+    color: #817478;
+    vertical-align: middle;
+  }
+  
+  
+  .overlay-wrap {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    max-width: 327px;
+    height: 50%;
+  }
+  .overlay-wrap.active {
+    -webkit-animation: fadeIn 0.3s ease-in-out forwards;
+            animation: fadeIn 0.3s ease-in-out forwards;
+  }
+  
+  .overlay {
+    background-color: #fff;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.3);
+  }
+  
+  .overlay-close {
+    position: absolute;
+    top: 0.5em;
+  right: 0.7em;
+    z-index: 10;
+  }
+  
+  .preview-img {
+    max-width: 327px;
+    margin: auto;
+    width: 100%;
+  }
+  
+  .preview-body {
+    padding: 1em;
+  }
+  
+  .preview-title {
+    margin-bottom: 0;
+  }
+  
+  @media (min-width: 700px) {
+    .overlay-wrap {
+      max-width: 37.44em;
+      position: fixed;
+    }
+  
+    .preview-img {
+      float: left;
+    }
+  
+    .preview-body {
+      float: left;
+      width: 51.4%;
+    }
+  }
+  /* FOOTER */
+  .footer-section {
+    background: #151414;
+    position: relative;
+    }
+    .single-cta i {
+    color: #ff5e14;
+    font-size: 30px;
+    float: left;
+    margin-top: 8px;
+    }
+    .cta-text {
+    padding-left: 15px;
+    display: inline-block;
+    }
+    .cta-text h4 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    }
+    .cta-text span {
+    color: #757575;
+    font-size: 15px;
+    }
+
+    .copyright-area{
+    background: #202020;
+    padding: 25px 0;
+    }
+    .copyright-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #878787;
+    
+    }
+    .copyright-text p a{
+    color: #ff5e14;
+    }

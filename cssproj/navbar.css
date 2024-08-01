@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'myFont';
+  src: url(./font/amsterdam-two-ttf.ttf);
+}
+/* NAVBAR */
+* {
+    font-family: sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  body {
+    height: 2000px;
+  }
+  .navbar .navbar-brand {
+    font-size: 30px;
+  }
+  .navbar{
+    padding: 10px 10px;
+    top: 0;
+  }
+  .navbar-brand img{
+    margin-top: -7px;
+  }
+  .nav-item {
+    padding: 10px 5px;
+  }
+  .navbar .nav-link {
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif
+  }
+  .fa-bars {
+    color: #ffffff;
+    font-size: 30px;
+  }
+  .nav-link, .navbar-brand{
+    color: white;
+  }
+  .nav-link:hover, .navbar-brand:hover{
+    color: #8ac3ff;
+  }
+  .nav-link:focus, .navbar-brand:focus{
+    color: #8ac3ff;
+  }
+  .active{
+    color: #8ac3ff;
+  }
+  /* DONE */
+  
+  /* LOGIN */
+  :root {
+    --white: #fff;
+    --black: #000;
+    --blue: rgb(39, 56, 133, 0.7);
+    --deepblue: #080808;
+  }
+  .formwarp {
+    height: 100vh;
+    overflow-x: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+  }
+  .btnlogin{
+    color: rgb(0, 0, 0);
+    background-color: #8ac3ff;
+    padding: 7px ;
+    outline: none;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .btnlogin:active{
+    color: rgb(0, 0, 0);
+    outline: none;
+    background-color: #8ac3ff;
+   
+  }
+  .login-register {
+    height: 100%;
+    display: flex;
+  }
+  .form {
+    width: 450px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+  
+  }
+  .form .form-header {
+    text-align: center;
+    margin-bottom: -23px;
+  }
+  /* .form .form-header img {
+    width: 80px;
+  } */
+  .logoform{
+    width: 150px;
+  }
+  .form .form-group {
+    margin-bottom: 15px;
+  }
+  .form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--black);
+  }
+  .form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--black);
+    border: 1px solid rgb(161, 161, 161);
+    outline: none;
+  }
+
+  .form-bottom p {
+    margin: 5px 0;
+    color: var(--black);
+    text-align: center;
+  }
+  .form-bottom a {
+    color: #291947;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  #register,
+  #forgot-password {
+    display: none;
+  }
+  @media (max-width: 991px) {
+    .logo img{
+      display: none;
+   }
+  }
