@@ -39,10 +39,10 @@ if (!isset($_SESSION['user_name'])) {
 
     section .container {
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
       margin-bottom: 2rem;
-    
+
     }
 
     section .container .card ul {
@@ -53,10 +53,10 @@ if (!isset($_SESSION['user_name'])) {
       align-items: center;
       flex-wrap: wrap;
       gap: 0.625rem;
-      
+
     }
 
-    section .container .card ul li {
+    section .container .card .butt {
       text-transform: uppercase;
       background: var(--clr-tag);
       color: #282828;
@@ -73,9 +73,9 @@ if (!isset($_SESSION['user_name'])) {
 
     section .container .card .content {
       padding: 0.938rem 0.625rem;
-      
+
     }
-  
+
 
     section .container .card .content h3 {
       text-transform: capitalize;
@@ -85,7 +85,7 @@ if (!isset($_SESSION['user_name'])) {
     section .container .card .content p {
       margin: 0.625rem 0 1.25rem;
       color: #565656;
-      
+
     }
 
     section .container .card-inner {
@@ -103,7 +103,7 @@ if (!isset($_SESSION['user_name'])) {
       background: #fff;
       border-radius: 1.25rem;
 
-      
+
       overflow: hidden;
     }
 
@@ -117,10 +117,11 @@ if (!isset($_SESSION['user_name'])) {
       height: 100%;
       object-fit: fit;
     }
-    .box_shadow{
-      box-shadow: 0px 10px 24px -14px rgba(0,0,0,0.75);
--webkit-box-shadow: 0px 10px 24px -14px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 10px 24px -14px rgba(0,0,0,0.75);
+
+    .box_shadow {
+      box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.75);
+      -webkit-box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.75);
     }
   </style>
 </head>
@@ -177,7 +178,7 @@ if (!isset($_SESSION['user_name'])) {
         while ($row = $query->fetch_assoc()) {
           $imageURL = '../uploads/' . $row["file_name"];
       ?>
-        
+
           <div class="card  box_shadow" id="divs">
             <div class="card-inner" style="--clr:#fff;">
               <div class="box">
@@ -188,18 +189,18 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="content">
               <div class="border-bottom">
-              <h3 class=" "><?php echo $row['Product'] ; ?></h3>
+                <h3 class=" "><?php echo $row['Product']; ?></h3>
 
               </div>
 
               <p><?php echo $row['Description']; ?></p>
               <div style="display:flex; justify-content:space-between; margin-top: -20px;">
 
-                <ul style="float:right;">
-                  <li style="--clr-tag:#d3b19a;" class="branding">ADD TO CART</li>
+                <form>
 
-                </ul>
-                <p style="font-weight:500; font-size:18px; margin-top:20px;">₱ <?php echo $row['Price']; ?></p>
+                  <button type="button" class="btn btn-primary flex my-3" style="font-size: .8rem; font-weight: 700; ">Add to Cart</button>
+                </form>
+                <p style="font-weight:700; font-size:18px; margin-top:20px; color: #D0622F">₱ <?php echo $row['Price']; ?></p>
               </div>
 
             </div>
@@ -208,7 +209,7 @@ if (!isset($_SESSION['user_name'])) {
       } ?>
     </div>
   </section>
-  
+
   <div class="my-5 text-white">
     q
   </div>
