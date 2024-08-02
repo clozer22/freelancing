@@ -2,36 +2,37 @@
 @include 'database.php';
 
 if(isset($_POST['register'])){
-    $user_type = mysqli_real_escape_string($conn, $_POST['user_type']);
-    $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
-    $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = $_POST['password'];
-    $passwordConfirm = $_POST['passwordConfirm'];
-  
-    $select = " SELECT * FROM tbl_users WHERE email = '$email'";
-    $result = mysqli_query($conn, $select);
-  
-    if(mysqli_num_rows($result) > 0)
-    {
-       $error[] = 'User Already Exist!';
-    }
-    else
-    {
-       if($password != $passwordConfirm)
-       {
-          $error[] = 'Password Not Matched!';
+  $user_type = mysqli_real_escape_string($conn, $_POST['user_type']);
+  $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
+  $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $password = $_POST['password'];
+  $passwordConfirm = $_POST['passwordConfirm'];
 
-       }
-       else
-       {
-          $insert = "INSERT INTO tbl_users(user_type, firstname,lastname, email, password) VALUES('$user_type','$firstname','$lastname','$email','$password')";
-          mysqli_query($conn, $insert);
-          header('location:login.php');
-       }
-    }
-  };
-?>
+  $select = "SELECT * FROM tbl_users WHERE email = '$email'";
+  $result = mysqli_query($conn, $select);
+
+  if(mysqli_num_rows($result) > 0)
+  {
+     $error[] = 'User Already Exists!';
+  }
+  else
+  {
+     if($password != $passwordConfirm)
+     {
+        $error[] = 'Passwords do not match!';
+     }
+     else
+     {
+        // Hash the password before inserting it into the database
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $insert = "INSERT INTO tbl_users(user_type, firstname, lastname, email, password) VALUES('$user_type', '$firstname', '$lastname', '$email', '$hashedPassword')";
+        mysqli_query($conn, $insert);
+        header('location:login.php');
+     }
+  }
+};
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +69,7 @@ if(isset($_POST['register'])){
   </head>
 <body style="overflow-y: hidden;">
 <!-- NAVBAR -->
-  <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
       <div class="logo">
           <img src="./img/logo.png" alt="" width="200px">
       </div>
@@ -82,7 +83,7 @@ if(isset($_POST['register'])){
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item active">
-                    <a class="nav-link active" href="index.php">Home <span class="sr-only"></span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#product">Products</a>
@@ -91,7 +92,7 @@ if(isset($_POST['register'])){
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contact</a>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <a class="nav-link" style="color: #b5246f;" href="login.php">Login</a>
                 </li>
             </ul>
         </div>

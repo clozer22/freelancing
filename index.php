@@ -100,7 +100,7 @@ if(isset($_POST['sendmsg']))
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
         <div class="logo">
             <img src="./img/logo.png" alt="" width="200px">
         </div>
@@ -115,7 +115,7 @@ if(isset($_POST['sendmsg']))
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto w-100 justify-content-end">
                     <li class="nav-item active">
-                        <a class="nav-link active" href="index.php">Home <span class="sr-only"></span></a>
+                        <a class="nav-link" style="color: #b5246f;" href="index.php">Home <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#package">Packages</a>

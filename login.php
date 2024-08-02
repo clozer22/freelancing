@@ -3,27 +3,31 @@
 @include 'database.php';
 session_start();
 if(isset($_POST['login'])){
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = $_POST['password'];
-    $select = " SELECT * FROM tbl_users WHERE email = '$email' && password = '$password' ";
-    $result = mysqli_query($conn, $select);
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $password = $_POST['password'];
 
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_array($result);
-        if($row['user_type'] == 'Admin'){
-            $_SESSION['admin_name'] = $row['lastname'];
-            
-            header('location:admin_dash.php');
-        }elseif($row['user_type'] == 'User'){
+  $select = "SELECT * FROM tbl_users WHERE email = '$email'";
+  $result = mysqli_query($conn, $select);
 
-            $_SESSION['user_name'] = $row['lastname'];
-            $_SESSION['email'] = $row['email'];
+  if(mysqli_num_rows($result) > 0){
+      $row = mysqli_fetch_array($result);
 
-            header('location:user_dash.php');
-        }
-    }else{
-        $error[] = '    Incorrect email or password!';
-    }
+      // Verify the password
+      if(password_verify($password, $row['password'])){
+          if($row['user_type'] == 'Admin'){
+              $_SESSION['admin_name'] = $row['lastname'];
+              header('location:admin_dash.php');
+          }elseif($row['user_type'] == 'User'){
+              $_SESSION['user_name'] = $row['lastname'];
+              $_SESSION['email'] = $row['email'];
+              header('location:user_dash.php');
+          }
+      } else {
+          $error[] = 'Incorrect email or password!';
+      }
+  } else {
+      $error[] = 'Incorrect email or password!';
+  }
 };
 
 ?>
@@ -64,7 +68,7 @@ if(isset($_POST['login'])){
 <body style="overflow-y: hidden;">
 
    <!-- NAVBAR -->
-   <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+   <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
         <div class="logo">
             <img src="./img/logo.png" alt="" width="200px">
         </div>
@@ -77,7 +81,7 @@ if(isset($_POST['login'])){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto w-100 justify-content-end">
                     <li class="nav-item active">
-                        <a class="nav-link active" href="index.php">Home <span class="sr-only"></span></a>
+                        <a class="nav-link" href="index.php">Home <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Products</a>
@@ -86,7 +90,7 @@ if(isset($_POST['login'])){
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Contact</a>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php">Login</a>
+                        <a class="nav-link" style="color: #b5246f;" href="login.php">Login</a>
                     </li>
                 </ul>
             </div>

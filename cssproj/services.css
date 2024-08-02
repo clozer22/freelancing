@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
 /* SEVICES */
+/* USER DASH CSS */
+.promo-body {
+  height: max-content;
+}
 *,
 *::before,
 *::after {
@@ -99,6 +103,8 @@
   margin-bottom: 1.25rem;    
   font-weight: 400;
 }
+
+
 
 /* MESSAGE */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');

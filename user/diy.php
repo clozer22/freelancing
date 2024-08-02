@@ -128,7 +128,7 @@ if (!isset($_SESSION['user_name'])) {
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
     <div class="container">
       <a style="opacity: 0; cursor: default; ">Lhenewin Party Solution</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,13 @@ if (!isset($_SESSION['user_name'])) {
             <a class="nav-link " href="package.php">Packages</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link active" href="diy.php">DIY Package</a>
+            <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="#">Cart</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="user_history.php">History</a>
           </li>
 
           <li class="nav-item">

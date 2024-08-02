@@ -15,6 +15,7 @@ if(!isset($_SESSION['user_name'])){
     <title>Lhenewin Event Website</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../cssproj/home.css">
+    <link rel="stylesheet" href="../cssproj/navbar.css">
     <link rel="stylesheet" href="../cssproj/services.css">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -239,7 +240,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" style="color: #b5246f;" href="">Home</a>
+            <a class="nav-link" href="userhome.php">Home</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="package.php">Packages</a>
@@ -251,7 +252,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="#">Cart</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link " href="user_history.php">History</a>
+            <a class="nav-link"  style="color: #b5246f;">History</a>
           </li>
 
           <li class="nav-item">
@@ -266,165 +267,8 @@ $desktop: only screen and (min-width:90em);
 
 
 
- <div class="head_container">
-      <div class="details"><br><br>
-          <h1>Lhenewin Party Solution</h1>
-          <h4>Experience Effortless Party Planning with Lhenewin Party Solution’s Innovative Reservation System!</h4><br>
-        <div style="width:500px;">
-
-        <div style="display: flex; justify-content:space-between;">
-        <i class="fas fa-home"style="font-size:30px;"></i>
-            <p  style="margin-top:7px;">BIk16 lot13 Langaray St. Dagat Dagatan, Caloocan</p>   
-          </div><br>
-
-          <div style="display: flex; justify-content:space-between;">
-              <i class="fas fa-phone" style="font-size:30px;"></i>  
-              <p  style="margin-top:7px;margin-right: auto; margin-left:22px;" >0981-047-6144</p>
-            </div><br>
-
-            <div style="display: flex; justify-content:space-between;">
-              <i class="fas fa-envelope" style="font-size:30px;"></i>
-              <p style="margin-top:7px; margin-right: auto; margin-left:22px;">lhenewinpartyss@gmail.com</p>
-            </div>
-        </div>
-      </div>
-      <div class="bgpic">
-          <img src="../img/balloon.png" alt="">
-      </div>
-      
-  </div>
-
 
 <!-- SERVICE -->
-
-
- 
-
-
-<div class="container-fluid" style="background-color: #2c2f34; color:white;" >
-    <div class="row row-eq-height align-items-center">
-        <div class="col-md-6 p-5 raleway">
-            <h2 class="text-uppercase">Read The Story Behind </h2>
-            <h2 class="text-uppercase">Our Success</h2>
-        
-        
-            <p><span class="text-primary">We provide buy-side, sell-side and market infrastructure firms</span>
-                <span>with a full-service offering, including systems integration and technology consulting services, to assist in delivering high performance trading and settlement.</span></p>
-
-            <p>More than 25 years of experience working in the industry has enabled us to build our services and solutions in strategy, consulting, digital, technology and operations that help our clients with their trading projects around the world. Capabilities we leverage.</p>
-        </div>
-
-        <div class="col-md-6 raleway">
-       
-                <div class="col-md">
-                    <div class="row">   
-                    <div class="col-md-2">
-                        <i class="fas fa-user-circle" style="font-size:70px;margin-top:-15px;"></i>
-                    </div>              
-                        <div class="col" style="margin-left:-25px;">
-                            <h5 class="text-primary">Strong Connection.</h5>
-                            <p>Transforming distribution and marketing with key capabilities in customer insight and analytics.</p>
-                        </div>
-                    </div>
-                </div><br>
-
-                <div class="col-md">
-                    <div class="row">
-                    <div class="col-md-2">
-                    <i class="fas fa-user-circle" style="font-size:70px;margin-top:-15px;"></i>
-                    </div>
-                    <div class="col" style="margin-left:-25px;">
-                            <h5 class="text-primary">Strong Connection.</h5>
-                            <p>Transforming distribution and marketing with key capabilities in customer insight and analytics.</p>
-                        </div>
-                    </div>
-                </div><br>
-
-                <div class="col">
-                    <div class="row">
-                    <div class="col-md-2">
-                        <i class="fas fa-user-circle" style="font-size:70px;margin-top:-15px;"></i>
-                    </div>
-                    <div class="col" style="margin-left:-25px;">
-                            <h5 class="text-primary">Strong Connection.</h5>
-                            <p>Transforming distribution and marketing with key capabilities in customer insight and analytics.</p>
-                        </div>
-                    </div>
-                </div>
-                
-        </div>
-       
-        </div>
-</div>
-
-
-
-
-
-
-
-
-  <div style="margin:50px 100px;">
-    <div class="content-header">
-      <h1 class="page-header">Upcoming Events</h1><br>
-    </div>
-    <div class="content-column">
-      <div class="events-listings">
-        <ul class="events-list">
-          <li class="event-item clearfix">
-            <div class="day-column">
-              <h4 class="month-name">Aug 5</h4>
-              <p class="day-name">wednesday</p>
-            </div>
-            <div class="title-column">
-              <div class="event-title">
-                <h3 class="title-name">Gratiot Lake Road and Troy Graham to perform at Trust Fall Records</h3>
-              </div>
-              <div class="event-details">
-                <ul class="event-details-list">
-                  <li class="event-details-item">
-                    <div>The Sinclair, Reed City</div>
-                  </li>
-                  <li class="event-details-item">
-                    <div>8:00 AM</div>
-                  </li>
-                </ul>
-              </div>
-     
-              </div>
-            </div>
-          </li>
-
-          <li class="event-item clearfix">
-            <div class="day-column">
-              <h4 class="month-name">Aug 5</h4>
-              <p class="day-name">wednesday</p>
-            </div>
-            <div class="title-column">
-              <div class="event-title">
-                <h3 class="title-name">Lake Hewlitt Annual Classical Music Festival</h3>
-              </div>
-              <div class="event-details">
-                <ul class="event-details-list">
-                  <li class="event-details-item">
-                    <div>Lake Hewlitt Center, Hewlitt</div>
-                  </li>
-                  <li class="event-details-item">
-                    <div>5:00 PM</div>
-                  </li>
-                </ul>
-              </div>
-             
-              </div>
-    </div>
-     
-  </div>
-  
-    <div class="ad-column">
-      <img class="ad" src="../img/5.jpg" width="300" height="150"><br>
-      <img class="ad" src="../img/6.jpg"  width="300" height="150">
-    </div>
-
 
 
 
