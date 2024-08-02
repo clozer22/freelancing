@@ -2,30 +2,36 @@
 
 include '../database.php';
 session_start();
+
 if(!isset($_SESSION['admin_name'])){
-   header('location:login.php');
+    header('location:login.php');
+    exit(); // Ensure the script stops after redirection
 }
-$id = $_GET['id'];
+
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // UPDATE PRODUCTS
 if(isset($_POST['UpdateProd'])){
 
-  $ProdName = $_POST['ProdName'];
-  $ProdPrice = $_POST['ProdPrice'];
-  $ProdDesc = $_POST['ProdDesc'];
+    $ProdName = $conn->real_escape_string($_POST['ProdName']);
+    $ProdPrice = $conn->real_escape_string($_POST['ProdPrice']);
+    $ProdDesc = $conn->real_escape_string($_POST['ProdDesc']);
 
-  $sql = "UPDATE `images` SET `Product`='$ProdName', `Price`='$ProdPrice',`Description`='$ProdDesc' WHERE id = $id";    
-  $results = mysqli_query($conn, $sql);
+    // Prepared statement for security
+    $stmt = $conn->prepare("UPDATE `images` SET `Product`=?, `Price`=?, `Description`=? WHERE id=?");
+    $stmt->bind_param("sssi", $ProdName, $ProdPrice, $ProdDesc, $id);
 
-  if($results){
-      header("Location: ../diypackage.php"); 
-  }
-  else{
-      echo "Failed" . mysqli_error($conn);
-  }
+    if($stmt->execute()){
+        header("Location: ../diypackage.php"); 
+        exit(); // Ensure the script stops after redirection
+    } else {
+        echo "Failed: " . $stmt->error;
+    }
+    $stmt->close();
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

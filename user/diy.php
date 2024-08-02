@@ -123,6 +123,19 @@ if (!isset($_SESSION['user_name'])) {
       -webkit-box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.75);
       -moz-box-shadow: 0px 10px 24px -14px rgba(0, 0, 0, 0.75);
     }
+
+    .ellipsis-container {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 15px;
+    }
+
+    .ellipsis-container p {
+      margin: 0;
+    }
   </style>
 </head>
 
@@ -148,6 +161,14 @@ if (!isset($_SESSION['user_name'])) {
           </li>
           <li class="nav-item active">
             <a class="nav-link active" href="diy.php">DIY Package</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="diy_cart.php"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+            </a>
           </li>
 
           <li class="nav-item">
@@ -179,7 +200,7 @@ if (!isset($_SESSION['user_name'])) {
           $imageURL = '../uploads/' . $row["file_name"];
       ?>
 
-          <div class="card  box_shadow" id="divs">
+          <div class="card box_shadow" id="divs">
             <div class="card-inner" style="--clr:#fff;">
               <div class="box">
                 <div class="imgBox">
@@ -189,26 +210,37 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="content">
               <div class="border-bottom">
-                <h3 class=" "><?php echo $row['Product']; ?></h3>
-
+                <h3><?php echo $row['Product']; ?></h3>
               </div>
-
-              <p><?php echo $row['Description']; ?></p>
+              <div class="ellipsis-container" style="height: 110px;">
+                <p><?php echo $row['Description']; ?></p>
+              </div>
               <div style="display:flex; justify-content:space-between; margin-top: -20px;">
+                <form method="post" action="../action/add_cart.php">
+                  <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                  <input type="hidden" name="product" value="<?php echo $row['Product']; ?>">
+                  <input type="hidden" name="product_price" value="<?php echo $row['Price']; ?>">
+                  <input type="hidden" name="quantity" value="1">
+                  <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                  <input type="hidden" name="description" value="<?php echo $row['Description']; ?>">
+                  <input type="hidden" name="image" value="<?php echo $row['file_name']; ?>">
 
-                <form>
 
-                  <button type="button" class="btn btn-primary flex my-3" style="font-size: .8rem; font-weight: 700; ">Add to Cart</button>
+
+                  <button type="submit" name="add_cart" class="btn btn-primary flex my-3 " style="font-size: .8rem; font-weight: 700;">
+                    Add to Cart
+                  </button>
                 </form>
+
                 <p style="font-weight:700; font-size:18px; margin-top:20px; color: #D0622F">₱ <?php echo $row['Price']; ?></p>
               </div>
-
             </div>
           </div>
       <?php }
       } ?>
     </div>
   </section>
+
 
   <div class="my-5 text-white">
     q

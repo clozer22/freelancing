@@ -17,6 +17,8 @@ if(isset($_POST['login'])){
         }elseif($row['user_type'] == 'User'){
 
             $_SESSION['user_name'] = $row['lastname'];
+            $_SESSION['user_id'] = $row['id'];
+
             $_SESSION['email'] = $row['email'];
 
             header('location:user_dash.php');
