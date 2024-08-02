@@ -138,7 +138,7 @@ if (!isset($_SESSION['user_name'])) {
                         }
                     } else {
                         ?>
-                        <div class="parent-container" style="">
+                        <div class="parent-container" >
                             <div class="mx-auto items-center flex justify-center" style="margin: auto; display: flex; align-items: center; justify-content: center; height: 100%;">
                                 <img src="../img/logo.png" height="500" style="object-fit: cover;">
                             </div>
@@ -148,11 +148,6 @@ if (!isset($_SESSION['user_name'])) {
                     <?php
                     }
                     ?>
-
-
-
-
-
 
 
                     <div class="card">
