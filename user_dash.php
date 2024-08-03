@@ -19,6 +19,7 @@ if(!isset($_SESSION['user_name'])){
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <style>
       @font-face {
           font-family: 'myFont';
@@ -74,7 +75,8 @@ if(!isset($_SESSION['user_name'])){
           flex-wrap: wrap;
         }
         .content-section {
-            padding: 40px 20px;
+            padding: 20px 20px;
+            border-radius: 20px;
         }
 
         .content-section h2 {
@@ -90,9 +92,10 @@ if(!isset($_SESSION['user_name'])){
             margin: 50px;
             height: auto;
         }
-        .testimonials img {
-            width: 100%;
-            height: auto;
+        .testimonials  {
+          width: 100%;
+          box-shadow: 1px 2px 3px 1px #e0e0e0;
+          margin-bottom: 2opx;
         }
         .services .service, .packages .package {
             display: flex;
@@ -134,6 +137,143 @@ if(!isset($_SESSION['user_name'])){
           height: 100%;
           object-fit: cover; 
         }
+
+
+
+
+        .th_dark{
+          background-color: rgb(52,58,64);
+          color: white;
+          font-weight: bold;
+          text-transform: uppercase;
+      }
+      .add{
+        background-color: #131418;
+        color: #c9c9c9;
+      }
+      td{
+        cursor: pointer;
+        font-size: 14px;
+      }
+      
+  .formbold-form-input {
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    font-weight: 500;
+    font-size: 16px;
+    color: #6b7280;
+    outline: none;
+    resize: none;
+  }
+      .heads {
+        position: relative;
+        min-height: auto;
+        text-align: center;
+        color: #fff;
+        width: 100%;
+        background-color: #c9c9c9;
+        background-image: url('./img/bg.jpg');
+        background-position: center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;         
+      }
+      .buttons{
+        margin: 24px 30px;
+      }
+      .button{
+        display: inline-block;
+        background: #ff7d3c;
+        margin: 0 10px;
+        padding: 10px 32px;
+        border-radius: 4px;
+        color: black;;
+        text-decoration: none;
+      }
+      a:hover{
+        color: black;
+        text-decoration: none;
+      }
+      .actives{
+        background-color: #131418;
+        color: #ff7d3c;
+      }
+      .actives:hover{
+        color: #ff7d3c;
+      }
+      .activeadd{
+        background-color: #343a40;
+        color: white;
+        font-weight: bold;
+        margin-top: 35px;
+      }
+      .activeadd:hover{
+        color: #ff7d3c;
+      }
+      .link:hover{
+          text-decoration: none;
+          color: red;
+        }
+        .links:hover{
+          text-decoration: none;
+          color: green;
+        }
+      
+      @media(min-width:768px) {
+        .heads {
+            min-height: 70%;
+        }
+        .heading {
+          width: 85%;
+          margin: 10px auto;
+          font-size: 20px;
+        }
+        .heading > h1 {
+          line-height: 45px;
+        }
+        .heading > p {
+          line-height: 30px;
+        }
+        .container1 {
+          flex-wrap: wrap;
+          display: flex;
+          justify-content: space-evenly;
+          padding: 1%;  
+        }
+        .info {
+          text-align: start;
+          line-height: 30px;
+          letter-spacing: 1px;
+          width: 28%;
+          box-shadow: 0 1px 1px 0 rgb(10 16 34 / 20%);
+          font-family: "Raleway", sans-serif;
+          background-color: #131418;
+        }
+        .heads .header-content {
+            position: absolute;
+            top: 50%;
+            padding: 0 50px;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .heads .header-content .inner {
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 1000px;
+        }
+        .heads .header-content .inner h1 {
+            font-size: 53px;
+            color: black;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+      }
     </style>
 </head>
 <body>
@@ -277,13 +417,51 @@ if(!isset($_SESSION['user_name'])){
     </section>
 
     <section class="content-section testimonials" id="testimonials">
-        <h2>What Our Clients Say</h2>
-        <div class="testimonial">
-            <p>"PartyMagic made my daughter's birthday a dream come true! The decorations were stunning, and the team was so professional. Highly recommend!" - Jessica S.</p>
+    <div id="container">
+      <h2 style="text-align:center; margin-top:35px;">Lhenewin Event Schedule</h2>
+      <p  style="text-align:center; margin-top:35px;">Check for Available date for your event</p>
+        <div class="container">
+          <div id="calendar"></div>
         </div>
-        <div class="testimonial">
-            <p>"Amazing service and beautiful setups! Our anniversary party was a hit thanks to PartyMagic." - Michael T.</p>
+
+        <!-- MODAL -->
+        <div id="eventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eventModalLabel">Add Event</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="eventForm">
+              <div class="form-group">
+                <label for="eventTitle">Event Title</label>
+                <input type="text" class="form-control" id="eventTitle" required>
+              </div>
+              <div class="form-group">
+                <label for="eventStart">Start Time</label>
+                <input type="datetime-local" class="form-control" id="eventStart" required>
+              </div>
+              <div class="form-group">
+                <label for="eventEnd">End Time</label>
+                <input type="datetime-local" class="form-control" id="eventEnd" required>
+              </div>
+              <div class="form-group">
+                <label for="eventColor">Event Color</label>
+                <input type="color" class="form-control" id="eventColor" required>
+              </div>
+              <div class="form-group">
+                <label for="eventTextColor">Text Color</label>
+                <input type="color" class="form-control" id="eventTextColor" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Add Event</button>
+            </form>
+          </div>
         </div>
+      </div>
+    </div>
     </section>
 </div>
 
@@ -302,6 +480,8 @@ if(!isset($_SESSION['user_name'])){
 
 
 
+
+
     
 
 <!-- OKAY -->
@@ -311,7 +491,12 @@ if(!isset($_SESSION['user_name'])){
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script> 
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- <script>
       $(document).ready(function(){
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
@@ -320,6 +505,83 @@ if(!isset($_SESSION['user_name'])){
       });
     });
   });
-  </script>
+  </script> -->
 </body>
 </html>
+<script>
+$(document).ready(function(){
+  // Fetch and display events from the database
+  function fetchEvents() {
+    $.ajax({
+      url: 'fetch_events.php',
+      method: 'GET',
+      dataType: 'json',
+      success: function(events) {
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', events);
+      },
+      error: function(error) {
+        console.log("Error fetching events:", error);
+      }
+    });
+  }
+
+  $('#calendar').fullCalendar({
+    selectable: true,
+    selectHelper: true,
+    header: {
+      left: 'month, list',
+      center: 'title',
+      right: 'prev, today, next'
+    },
+    buttonText: {
+      month: 'Month',
+      list: 'List',
+    },
+    select: function(start, end) {
+      $('#eventModal').modal('show');
+      $('#eventStart').val(moment(start).format('YYYY-MM-DDTHH:mm'));
+      $('#eventEnd').val(moment(end).format('YYYY-MM-DDTHH:mm'));
+    },
+    events: fetchEvents()
+  });
+
+  $('#eventForm').on('submit', function(event) {
+    event.preventDefault();
+    
+    var title = $('#eventTitle').val();
+    var start = $('#eventStart').val();
+    var end = $('#eventEnd').val();
+    var color = $('#eventColor').val();
+    var textColor = $('#eventTextColor').val();
+
+    $.ajax({
+      url: 'add_event.php',
+      method: 'POST',
+      data: {
+        title: title,
+        start: start,
+        end: end,
+        color: color,
+        textColor: textColor
+      },
+      dataType: 'json',
+      success: function(response) {
+        if(response.status == 'success') {
+          fetchEvents();
+        } else {
+          alert('Failed to add event.');
+        }
+      },
+      error: function(error) {
+        console.log("Error adding event:", error);
+      }
+    });
+
+    $('#eventModal').modal('hide');
+    $('#eventForm')[0].reset();
+  });
+
+  fetchEvents(); // Initial fetch of events
+});
+</script>
