@@ -122,6 +122,16 @@ if(!isset($_SESSION['user_name'])){
             flex: 1;
             padding: 0 10px;
         }
+        .package {
+          display: flex;
+          gap: 1rem;
+        }
+        .package div {
+          background-color: #c7edff;
+          width: 300px;
+          height: 200px;
+          padding: 13px;
+        }
         .testimonials .testimonial {
             margin-bottom: 20px;
             text-align: center;
@@ -138,36 +148,33 @@ if(!isset($_SESSION['user_name'])){
           object-fit: cover; 
         }
 
-
-
-
         .th_dark{
           background-color: rgb(52,58,64);
           color: white;
           font-weight: bold;
           text-transform: uppercase;
-      }
-      .add{
-        background-color: #131418;
-        color: #c9c9c9;
-      }
-      td{
-        cursor: pointer;
-        font-size: 14px;
-      }
+        }
+        .add{
+          background-color: #131418;
+          color: #c9c9c9;
+        }
+        td{
+          cursor: pointer;
+          font-size: 14px;
+        }
       
-  .formbold-form-input {
-    width: 100%;
-    padding: 12px 24px;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
-    background: white;
-    font-weight: 500;
-    font-size: 16px;
-    color: #6b7280;
-    outline: none;
-    resize: none;
-  }
+        .formbold-form-input {
+          width: 100%;
+          padding: 12px 24px;
+          border-radius: 6px;
+          border: 1px solid #e0e0e0;
+          background: white;
+          font-weight: 500;
+          font-size: 16px;
+          color: #6b7280;
+          outline: none;
+          resize: none;
+        }
       .heads {
         position: relative;
         min-height: auto;
@@ -374,17 +381,17 @@ if(!isset($_SESSION['user_name'])){
         <h2>Packages & Pricing</h2>
         <div class="package">
             <div>
-                <h3>Basic Package</h3>
+                <h3>Package 1</h3>
                 <p>Includes basic balloon decorations and simple party setups.</p>
                 <p>Starting at $200</p>
             </div>
             <div>
-                <h3>Premium Package</h3>
+                <h3>Package 2</h3>
                 <p>Includes advanced balloon decorations, themed setups, and additional services.</p>
                 <p>Starting at $500</p>
             </div>
             <div>
-                <h3>Deluxe Package</h3>
+                <h3>Package 3</h3>
                 <p>Includes premium balloon decorations, customized setups, and full-service planning.</p>
                 <p>Starting at $1000</p>
             </div>
@@ -538,11 +545,11 @@ $(document).ready(function(){
       month: 'Month',
       list: 'List',
     },
-    select: function(start, end) {
-      $('#eventModal').modal('show');
-      $('#eventStart').val(moment(start).format('YYYY-MM-DDTHH:mm'));
-      $('#eventEnd').val(moment(end).format('YYYY-MM-DDTHH:mm'));
-    },
+    // select: function(start, end) {
+    //   $('#eventModal').modal('show');
+    //   $('#eventStart').val(moment(start).format('YYYY-MM-DDTHH:mm'));
+    //   $('#eventEnd').val(moment(end).format('YYYY-MM-DDTHH:mm'));
+    // },
     events: fetchEvents()
   });
 

@@ -223,6 +223,24 @@ $desktop: only screen and (min-width:90em);
     .table tr:hover {
       background-color: #8adaff;
     }
+    .info-popup {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.hoverable {
+  cursor: pointer;
+}
+
+.hoverable:hover {
+  background-color: #f1f1f1;
+}
+
     </style>
 </head>
 <body>
@@ -287,33 +305,35 @@ $desktop: only screen and (min-width:90em);
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr class="hoverable" data-info="Additional information for Jollibee Birthday">
         <th scope="row">1</th>
         <td>Jollibee Birthday</td>
         <td>Monday</td>
-        <td>11:00Am - 3:00PM</td>
+        <td>11:00 AM - 3:00 PM</td>
         <td>Purple</td>
         <td>Package B</td>
       </tr>
-      <tr>
+      <tr class="hoverable" data-info="Additional information for Junnie BOI Birthday">
         <th scope="row">2</th>
         <td>Junnie BOI Birthday</td>
         <td>Thursday</td>
-        <td>12:00Am - 2:00PM</td>
+        <td>12:00 AM - 2:00 PM</td>
         <td>Green</td>
         <td>Package Z</td>
       </tr>
-      <tr>
+      <tr class="hoverable" data-info="Additional information for Boss' Birthday Party">
         <th scope="row">3</th>
         <td>Boss' Birthday Party</td>
         <td>Sunday</td>
-        <td>3:00Am - 9:00PM</td>
+        <td>3:00 AM - 9:00 PM</td>
         <td>Red</td>
         <td>DIY Package</td>
       </tr>
     </tbody>
   </table>
+  <div id="infoPopup" class="info-popup"></div>
 </div>
+
 
 
 <!-- OKAY -->
@@ -329,6 +349,28 @@ $desktop: only screen and (min-width:90em);
       });
     });
   });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  var rows = document.querySelectorAll('.hoverable');
+  var popup = document.getElementById('infoPopup');
+
+  rows.forEach(function (row) {
+    row.addEventListener('mouseenter', function (event) {
+      var info = this.getAttribute('data-info');
+      popup.innerHTML = info;
+      popup.style.display = 'block';
+      var rect = this.getBoundingClientRect();
+      popup.style.left = rect.right + 'px';
+      popup.style.top = rect.top + window.scrollY + 'px';
+    });
+
+    row.addEventListener('mouseleave', function () {
+      popup.style.display = 'none';
+    });
+  });
+});
+
   </script>
 </body>
 </html>
