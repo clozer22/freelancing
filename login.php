@@ -20,8 +20,7 @@ if(isset($_POST['login'])){
           }elseif($row['user_type'] == 'User'){
               $_SESSION['user_name'] = $row['lastname'];
               $_SESSION['email'] = $row['email'];
-              $_SESSION['user_id'] = $row['id'];
-
+               $_SESSION['user_id'] = $row['id'];
               header('location:user_dash.php');
           }
       } else {
