@@ -163,7 +163,7 @@ if (!isset($_SESSION['user_name'])) {
             <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link " href="#">Cart</a>
+            <a class="nav-link " href="diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="user_history.php">History</a>

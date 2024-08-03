@@ -220,6 +220,9 @@ $desktop: only screen and (min-width:90em);
       }
 
     }
+    .table tr:hover {
+      background-color: #8adaff;
+    }
     </style>
 </head>
 <body>
@@ -249,7 +252,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="diy.php">DIY Package</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link " href="#">Cart</a>
+            <a class="nav-link " href="diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link"  style="color: #b5246f;">History</a>
@@ -270,6 +273,47 @@ $desktop: only screen and (min-width:90em);
 
 <!-- SERVICE -->
 
+<div class="container">
+  <h1 class="m-5">History Transaction</h1>
+  <table class="table border mt-5">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Event Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Event Color</th>
+        <th scope="col">Package Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Jollibee Birthday</td>
+        <td>Monday</td>
+        <td>11:00Am - 3:00PM</td>
+        <td>Purple</td>
+        <td>Package B</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Junnie BOI Birthday</td>
+        <td>Thursday</td>
+        <td>12:00Am - 2:00PM</td>
+        <td>Green</td>
+        <td>Package Z</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Boss' Birthday Party</td>
+        <td>Sunday</td>
+        <td>3:00Am - 9:00PM</td>
+        <td>Red</td>
+        <td>DIY Package</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 
 <!-- OKAY -->

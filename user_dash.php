@@ -303,7 +303,7 @@ if(!isset($_SESSION['user_name'])){
           <a class="nav-link " href="./user/diy.php">DIY Package</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link " href="#">Cart</a>
+          <a class="nav-link " href="./user/diy_cart.php">Cart</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link " href="./user/user_history.php">History</a>

@@ -248,7 +248,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="diy.php">DIY Package</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link " href="#">Cart</a>
+            <a class="nav-link " href="diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="user_history.php">History</a>
