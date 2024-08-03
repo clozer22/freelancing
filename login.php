@@ -20,6 +20,7 @@ if(isset($_POST['login'])){
           }elseif($row['user_type'] == 'User'){
               $_SESSION['user_name'] = $row['lastname'];
               $_SESSION['email'] = $row['email'];
+              
               header('location:user_dash.php');
           }
       } else {
@@ -28,7 +29,27 @@ if(isset($_POST['login'])){
   } else {
       $error[] = 'Incorrect email or password!';
   }
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_array($result);
+        if($row['user_type'] == 'Admin'){
+            $_SESSION['admin_name'] = $row['lastname'];
+            
+            header('location:admin_dash.php');
+        }elseif($row['user_type'] == 'User'){
+
+            $_SESSION['user_name'] = $row['lastname'];
+            $_SESSION['user_id'] = $row['id'];
+
+            $_SESSION['email'] = $row['email'];
+
+            header('location:user_dash.php');
+        }
+    }else{
+        $error[] = '    Incorrect email or password!';
+    }
 };
+
+
 
 ?>
 <!DOCTYPE html>
