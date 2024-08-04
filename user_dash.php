@@ -120,17 +120,25 @@ if(!isset($_SESSION['user_name'])){
         }
         .services , .packages .package div {
             flex: 1;
-            padding: 0 10px;
         }
         .package {
           display: flex;
           gap: 1rem;
+          flex-wrap: wrap;
         }
-        .package div {
-          background-color: #c7edff;
-          width: 300px;
+        .pack {
+          color: white;
+          background: #e67e22;
           height: 200px;
-          padding: 13px;
+          border-radius: 8px;
+          padding: 30px;
+          transition: 0.3s;
+          height: max-content;
+          min-height: 230px;
+        }
+        .pack:hover {
+          transform: scale(1.1);
+          border: 1px solid #4a4111;
         }
         .testimonials .testimonial {
             margin-bottom: 20px;
@@ -380,17 +388,17 @@ if(!isset($_SESSION['user_name'])){
     <section class="content-section packages" id="packages">
         <h2>Packages & Pricing</h2>
         <div class="package">
-            <div>
+            <div class="pack">
                 <h3>Package 1</h3>
                 <p>Includes basic balloon decorations and simple party setups.</p>
                 <p>Starting at $200</p>
             </div>
-            <div>
+            <div class="pack">
                 <h3>Package 2</h3>
                 <p>Includes advanced balloon decorations, themed setups, and additional services.</p>
                 <p>Starting at $500</p>
             </div>
-            <div>
+            <div class="pack">
                 <h3>Package 3</h3>
                 <p>Includes premium balloon decorations, customized setups, and full-service planning.</p>
                 <p>Starting at $1000</p>
