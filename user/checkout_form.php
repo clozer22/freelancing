@@ -1,11 +1,54 @@
 <?php
-
 @include '../database.php';
 session_start();
 if (!isset($_SESSION['user_name'])) {
     header('location:login.php');
 }
 ?>
+
+
+<?php
+
+if (isset($_POST['checkOutForm'])) {
+    $firstName = $_POST['firstname'];
+    $lastName = $_POST['lastname'];
+    $email = $_POST['email'];
+    $address1 = $_POST['address1'];
+    $address2 = $_POST['address2'] ?? null;
+    $country = $_POST['country'];
+    $state = $_POST['state'];
+    $zip = $_POST['zip'];
+    $pay_option = $_POST['paymentMethod'];
+    $total_price = $_POST['total_price'];
+    $item_name = $_POST['item_name'];
+    $qty = $_POST['quantity'];
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $insert_form = mysqli_query($conn, "
+        INSERT INTO tbl_orders (
+            first_name, last_name, email, order_total, order_item_name, order_address1, 
+            order_address2, order_country, order_state, order_zip, order_date, 
+             order_paymentOption, order_status, order_qty
+        ) VALUES (
+            '$firstName', '$lastName', '$email', '$total_price', '$item_name', 
+            '$address1', '$address2', '$country', '$state', '$zip', NOW(), 
+            '$pay_option', 'Pending', '$qty'
+        )
+    ");
+
+    if ($insert_form) {
+        echo "Order successfully placed!";
+        header("Location: ../user_dash.php");
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -299,37 +342,81 @@ $desktop: only screen and (min-width:90em);
         </div>
         <div class="row">
             <div class=" col-md-4 order-md-2 mb-4" style="z-index:auto">
+
+                <?php
+
+                include('../database.php');
+
+                $user_id = $_SESSION['user_id'];
+
+                // Query to count the number of items in the cart for the given user
+                $query = $conn->query("
+                        SELECT COUNT(*) as cart_count FROM tbl_cart WHERE id = $user_id
+                    ");
+
+                $result = $query->fetch_assoc();
+                $cart_count = $result['cart_count'];
+
+                $total = mysqli_query($conn, "SELECT SUM(Price) as Total_Price, product_name, Quantity FROM tbl_cart WHERE id = $user_id");
+
+                if ($total && mysqli_num_rows($total) > 0) {
+                    $row = mysqli_fetch_assoc($total);
+                    $total_price = $row['Total_Price'];
+                    $itemName = $row['product_name'];
+                    $qty = $row['Quantity'];
+                } else {
+                    $total_price = 0;
+                }
+                ?>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill">3</span>
+                    <span class="badge badge-secondary badge-pill"><?php echo $cart_count; ?></span>
                 </h4>
                 <ul class="list-group mb-3 sticky-top">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$12</span>
-                    </li>
+                    <?php
+                    include('../database.php');
+
+                    $user_id = $_SESSION['user_id'];
+
+                    $query = $conn->query("
+                                SELECT * FROM tbl_cart WHERE id = $user_id
+                            ");
+
+                    if ($query->num_rows > 0) {
+                        while ($row = $query->fetch_assoc()) {
+                            $imageURL = '../uploads/' . $row["image_url"];
+                    ?>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"><?php echo $row['product_name'] ?></h6>
+                                    <small class="text-muted"><?php echo $row['description'] ?></small>
+                                </div>
+                                <span class="text-muted">₱ <?php echo $row['Price'] ?></span>
+                            </li>
+                    <?php
+                        }
+                    }
+                    ?>
 
                     <li class="list-group-item bg-dark text-white d-flex justify-content-between">
                         <span>Total (USD)</span>
-                        <strong>$20</strong>
+                        <strong>₱ <?php echo $total_price ?></strong>
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" method="POST" novalidate="">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <input type="text" name="firstname" value="<?php echo $_SESSION['firstname'] ?? '' ?>" class="form-control" id="firstName" placeholder="" value="">
                             <div class="invalid-feedback"> Valid first name is required. </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                            <input type="text" name="lastname" value="<?php echo $_SESSION['lastname'] ?? '' ?>" class="form-control" id="lastName" placeholder="">
                             <div class="invalid-feedback"> Valid last name is required. </div>
                         </div>
                     </div>
@@ -339,27 +426,26 @@ $desktop: only screen and (min-width:90em);
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            <input type="text" class="form-control" id="username" placeholder="Email" required="">
+                            <input type="email" name="email" class="form-control" id="username" value="<?php echo $_SESSION['email'] ?? '' ?>" placeholder="Email" required="">
                             <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="email">Username <span class="text-muted">(Optional)</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="username">
-                    </div>
-                    <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                        <input type="text" name="address1" class="form-control" id="address" placeholder="1234 Main St" required="">
                         <div class="invalid-feedback"> Please enter your shipping address. </div>
                     </div>
                     <div class="mb-3">
-                        <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <label for="address2">Address 2 <?php echo $itemName ?> <span class="text-muted">(Optional) </span></label>
+                        <input type="text" name="address2" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <input type="hidden" name="total_price" value="<?php echo $total_price ?>" class="form-control">
+                        <input type="hidden" name="item_name" value="<?php echo $itemName ?>" class="form-control">
+                        <input type="hidden" name="quantity" value="<?php echo $qty ?>" class="form-control">
                     </div>
                     <div class="row">
                         <div class="col-md-5 mb-3">
                             <label for="country">Country</label>
-                            <select class="custom-select d-block w-100" id="state" required="">
+                            <select name="country" class="custom-select d-block w-100" id="state" required="">
                                 <option value="">Choose...</option>
                                 <option value="philippines" selected>Philippines</option>
                             </select>
@@ -367,15 +453,12 @@ $desktop: only screen and (min-width:90em);
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="state">State</label>
-                            <select class="custom-select d-block w-100" id="state" required="">
-                                <option value="">Choose...</option>
-                                <option value="philippines" selected>Philippines</option>
-                            </select>
+                            <input type="text" name="state" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback"> Please provide a valid state. </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="zip">Zip</label>
-                            <input type="text" class="form-control" id="zip" placeholder="" required="">
+                            <input type="text" name="zip" inputmode="numeric" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback"> Zip code required. </div>
                         </div>
                     </div>
@@ -385,18 +468,18 @@ $desktop: only screen and (min-width:90em);
                     <h4 class="mb-3">Payment</h4>
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                            <input id="credit" name="paymentMethod" type="radio" disabled class="custom-control-input" checked="" value="GCASH" required="">
                             <label class="custom-control-label" for="credit">GCash</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                            <input id="debit" name="paymentMethod" checked type="radio" class="custom-control-input" required="" value="COD">
                             <label class="custom-control-label" for="debit">Cash on Delivery</label>
                         </div>
 
                     </div>
 
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button name="checkOutForm" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
                 </form>
             </div>
         </div>
