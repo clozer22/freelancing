@@ -385,20 +385,42 @@ $desktop: only screen and (min-width:90em);
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill"><?php echo $cart_count; ?></span>
                 </h4>
-                <ul class="list-group mb-3 sticky-top">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$12</span>
-                    </li>
+                <?php
+                include('../database.php');
 
-                    <li class="list-group-item bg-dark text-white d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
+                $select_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE isSelected = 1 AND id = {$_SESSION['user_id']}");
+                $grand_total = 0;
+                if (mysqli_num_rows($select_cart) > 0) {
+                    while ($row = mysqli_fetch_assoc($select_cart)) {
+                        $imageURL = '../uploads/' . $row["image_url"];
+
+                ?>
+                        <ul class="list-group mb-3 sticky-top">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div class="d-flex">
+                                    <img src="<?php echo $imageURL ?>" class=" rounded-2" style="height:50px; width: 70px; border-radius: 5px;">
+
+                                    <div class="mx-2">
+                                        <h6 class="my-0"><?php echo $row['product_name'] ?></h6>
+                                        <small class="text-muted ellipsis-container"></small>
+
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <span class="text-muted"><?php echo $row['Price'] ?></span>
+                                </div>
+
+                            </li>
+
+                            <li class="list-group-item bg-dark text-white d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong>$20</strong>
+                            </li>
+                        </ul>
+                <?php
+                    }
+                }
+                ?>
             </div>
 
             <div class="col-md-8 order-md-1">
