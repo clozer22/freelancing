@@ -140,11 +140,12 @@ if (isset($_POST['btn_check_out'])) {
                                     <div class="card-body p-4">
                                         <div class="row d-flex justify-content-between align-items-center">
                                             <div class="col-md-2 col-lg-2 col-xl-2 d-flex align-items-center">
-                                                <input type="checkbox" name="selected_prod[]" value="<?php echo $row['cart_id']; ?>" id="checkbox_<?php echo $row['cart_id']; ?>" class="form-check-label">
+                                            <input type="checkbox" name="selected_prod[]" value="<?php echo $row['cart_id']; ?>" id="checkbox_<?php echo $row['cart_id']; ?>" class="form-check-label">
+
+                                                <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width: 200px;" alt="<?php echo $row['product_name']; ?>">
                                             </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3">
-                                                <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width:400px; border-radius: 10px" alt="<?php echo $row['product_name']; ?>">
-                                                <p class="lead fw-normal mb-2"><span style="font-size: 30px; font-weight:700; color:#FFC106;"><?php echo $row['product_name']; ?></span></p>
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <p class="lead fw-normal mb-2" style="font-size: 30px; font-weight: 700; color: #FFC106;"><?php echo $row['product_name']; ?></p>
                                                 <p class="ellipsis-container"><span class="text-muted" style="font-weight: 800;">Description: <br></span><span style="font-size: 13px;"><?php echo $row['description']; ?></span></p>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -156,7 +157,7 @@ if (isset($_POST['btn_check_out'])) {
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </div>
-                                            <div class="col-md-3 flex col-lg-2 col-xl-2 offset-lg-1">
+                                            <div class="col-md-2 col-lg-2 col-xl-2 offset-lg-1">
                                                 <h5 class="mb-0">₱<?php echo number_format($row['Price'], 2); ?></h5>
                                             </div>
                                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -172,10 +173,11 @@ if (isset($_POST['btn_check_out'])) {
                                         </div>
                                     </div>
                                 </div>
-                        <?php
+
+                            <?php
                             }
                         } else {
-                        ?>
+                            ?>
                             <div class="parent-container">
                                 <div class="mx-auto items-center flex justify-center align-items-center text-center" style="display: flex; justify-content: center; align-items: center;">
                                     <img src="../images/emptycart.png" alt="Empty Cart" class="img-fluid" style="height: 300px;">
