@@ -101,7 +101,7 @@ if (!isset($_SESSION['user_name'])) {
                                 <div class="card-body p-4">
                                     <div class="row d-flex justify-content-between align-items-center">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
-                                           <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" alt="<?php echo $row['product_name']; ?>">
+                                            <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" alt="<?php echo $row['product_name']; ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-3">
                                             <p class="lead fw-normal mb-2 " style=""><span style="font-size: 30px; font-weight:700; color:#FFC106 "><?php echo $row['product_name']; ?></span></p>
@@ -138,7 +138,7 @@ if (!isset($_SESSION['user_name'])) {
                         }
                     } else {
                         ?>
-                        <div class="parent-container" >
+                        <div class="parent-container">
                             <div class="mx-auto items-center flex justify-center" style="margin: auto; display: flex; align-items: center; justify-content: center; height: 100%;">
                                 <img src="../img/logo.png" height="500" style="object-fit: cover;">
                             </div>
