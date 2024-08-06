@@ -289,6 +289,19 @@ $desktop: only screen and (min-width:90em);
             }
 
         }
+
+        .ellipsis-container {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: horizontal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 30%;
+        }
+
+        .ellipsis-container p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -373,34 +386,17 @@ $desktop: only screen and (min-width:90em);
                     <span class="badge badge-secondary badge-pill"><?php echo $cart_count; ?></span>
                 </h4>
                 <ul class="list-group mb-3 sticky-top">
-                    <?php
-                    include('../database.php');
-
-                    $user_id = $_SESSION['user_id'];
-
-                    $query = $conn->query("
-                                SELECT * FROM tbl_cart WHERE id = $user_id
-                            ");
-
-                    if ($query->num_rows > 0) {
-                        while ($row = $query->fetch_assoc()) {
-                            $imageURL = '../uploads/' . $row["image_url"];
-                    ?>
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0"><?php echo $row['product_name'] ?></h6>
-                                    <small class="text-muted"><?php echo $row['description'] ?></small>
-                                </div>
-                                <span class="text-muted">₱ <?php echo $row['Price'] ?></span>
-                            </li>
-                    <?php
-                        }
-                    }
-                    ?>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Product name</h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">$12</span>
+                    </li>
 
                     <li class="list-group-item bg-dark text-white d-flex justify-content-between">
                         <span>Total (USD)</span>
-                        <strong>₱ <?php echo $total_price ?></strong>
+                        <strong>$20</strong>
                     </li>
                 </ul>
             </div>

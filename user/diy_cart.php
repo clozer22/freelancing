@@ -6,6 +6,53 @@ if (!isset($_SESSION['user_name'])) {
     header('location:login.php');
 }
 ?>
+
+
+<?php
+include('../database.php');
+
+if (isset($_POST['btn_check_out'])) {
+    // Use the correct name for the array of selected items
+    $selected_products = $_POST['selected_prod'] ?? array();
+
+    // Start by setting all items to unselected
+    $update_all_query = "UPDATE tbl_cart SET isSelected = 0";
+    if (!mysqli_query($conn, $update_all_query)) {
+        echo "Error updating cart: " . mysqli_error($conn);
+        exit();
+    }
+
+    if (!empty($selected_products)) {
+        // Convert the array of selected IDs to an array of integers
+        $selected_ids = array_map('intval', $selected_products);
+
+        // Construct placeholders for the IN clause of the query
+        $placeholders = implode(',', array_fill(0, count($selected_ids), '?'));
+
+        // Create a parameterized query to update selected rows
+        $update_query = "UPDATE tbl_cart SET isSelected = 1 WHERE cart_id IN ($placeholders)";
+
+        // Prepare the statement
+        $stmt = mysqli_prepare($conn, $update_query);
+
+        // Bind the selected IDs as parameters
+        mysqli_stmt_bind_param($stmt, str_repeat('i', count($selected_ids)), ...$selected_ids);
+
+        // Execute the update
+        if (mysqli_stmt_execute($stmt)) {
+            header("Location: checkout_form.php");
+            exit();
+        } else {
+            echo "Error updating cart: " . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
+    } else {
+        // Redirect if no items were selected, after setting all to unselected
+        header("Location: checkout_form.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +65,19 @@ if (!isset($_SESSION['user_name'])) {
 
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+        .ellipsis-container {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 15px;
+        }
+
+        .ellipsis-container p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -74,25 +134,35 @@ if (!isset($_SESSION['user_name'])) {
         <div class="container h-100 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h3 class="fw-normal mb-0">Shopping Cart</h3>
-                        <div>
-                            <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
+                    <form method="POST">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="fw-normal mb-0">Shopping Cart</h3>
+                            <div>
+                                <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    <?php
-                    include('../database.php');
+                        <?php
+                        include('../database.php');
+                        $user_id = $_SESSION['user_id'];
 
-                    $user_id = $_SESSION['user_id'];
+                        $query = $conn->query("SELECT * FROM tbl_cart WHERE id = $user_id");
 
-                    $query = $conn->query("
-                                SELECT * FROM tbl_cart WHERE id = $user_id
-                            ");
+                        if ($query->num_rows > 0) {
+                            $items = [];
+                            while ($row = $query->fetch_assoc()) {
+                                $imageURL = '../uploads/' . $row["image_url"];
+                                $items[] = $row;
+                        ?>
+                                <div class="card rounded-3 mb-4">
+                                    <div class="card-body p-4">
+                                        <div class="row d-flex justify-content-between align-items-center">
+                                            <div class="col-md-2 col-lg-2 col-xl-2 d-flex align-items-center">
+                                                <input type="checkbox" name="selected_prod[]" value="<?php echo $row['cart_id']; ?>" id="checkbox_<?php echo $row['cart_id']; ?>" class="form-check-label">
 
+<<<<<<< Updated upstream
                     if ($query->num_rows > 0) {
                         while ($row = $query->fetch_assoc()) {
                             $imageURL = '../uploads/' . $row["image_url"];
@@ -130,31 +200,68 @@ if (!isset($_SESSION['user_name'])) {
                                                     <path d="M14 11v6"></path>
                                                 </svg>
                                             </a>
+=======
+                                                <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width:400px; border-radius: 10px" alt="<?php echo $row['product_name']; ?>">
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                                <p class="lead fw-normal mb-2"><span style="font-size: 30px; font-weight:700; color:#FFC106;"><?php echo $row['product_name']; ?></span></p>
+                                                <p class="ellipsis-container"><span class="text-muted" style="font-weight: 800;">Description: <br></span><span style="font-size: 13px;"><?php echo $row['description']; ?></span></p>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input id="form1" min="1" name="quantity[<?php echo $row['cart_id']; ?>]" value="<?php echo $row['Quantity']; ?>" type="number" class="form-control form-control-sm" />
+                                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3 flex col-lg-2 col-xl-2 offset-lg-1">
+                                                <h5 class="mb-0">₱<?php echo number_format($row['Price'], 2); ?></h5>
+                                            </div>
+                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                <a href="../action/remove_from_cart.php?cart_id=<?php echo $row['cart_id']; ?>" class="text-danger">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6l-2 14H7L5 6h14z"></path>
+                                                        <path d="M10 11v6"></path>
+                                                        <path d="M14 11v6"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
                                 </div>
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <div class="parent-container">
+                                <div class="mx-auto items-center flex justify-center" style="margin: auto; display: flex; align-items: center; justify-content: center; height: 100%;">
+                                    <img src="../img/logo.png" height="500" style="object-fit: cover;">
+                                </div>
+                                <h1 class="text-center">No items selected in your cart!</h1>
                             </div>
                         <?php
                         }
-                    } else {
                         ?>
+<<<<<<< Updated upstream
                         <div class="parent-container">
                             <div class="mx-auto items-center flex justify-center" style="margin: auto; display: flex; align-items: center; justify-content: center; height: 100%;">
                                 <img src="../img/logo.png" height="500" style="object-fit: cover;">
+=======
+
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <button type="submit" name="btn_check_out" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Checkout</button>
+
+>>>>>>> Stashed changes
                             </div>
-                            <h1 class="text-center">No items selected on your cart!</h1>
                         </div>
-
-                    <?php
-                    }
-                    ?>
-
-
-                    <div class="card">
-                        <div class="card-body">
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
-                        </div>
-                    </div>
+                    </form>
 
                 </div>
             </div>
