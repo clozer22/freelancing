@@ -298,37 +298,34 @@ $desktop: only screen and (min-width:90em);
       <tr>
         <th scope="col"></th>
         <th scope="col">Event Name</th>
-        <th scope="col">Date</th>
-        <th scope="col">Time</th>
-        <th scope="col">Event Color</th>
-        <th scope="col">Package Type</th>
+        <th scope="col">Celebrant Name</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="hoverable" data-info="Additional information for Jollibee Birthday">
-        <th scope="row">1</th>
-        <td>Jollibee Birthday</td>
-        <td>Monday</td>
-        <td>11:00 AM - 3:00 PM</td>
-        <td>Purple</td>
-        <td>Package B</td>
-      </tr>
-      <tr class="hoverable" data-info="Additional information for Junnie BOI Birthday">
-        <th scope="row">2</th>
-        <td>Junnie BOI Birthday</td>
-        <td>Thursday</td>
-        <td>12:00 AM - 2:00 PM</td>
-        <td>Green</td>
-        <td>Package Z</td>
-      </tr>
-      <tr class="hoverable" data-info="Additional information for Boss' Birthday Party">
-        <th scope="row">3</th>
-        <td>Boss' Birthday Party</td>
-        <td>Sunday</td>
-        <td>3:00 AM - 9:00 PM</td>
-        <td>Red</td>
-        <td>DIY Package</td>
-      </tr>
+    <?php 
+      $user_id = $_SESSION['user_id'];
+      $sql = "SELECT title, celebrant_name, package_price, start_datetime, end_datetime FROM tbl_events_list WHERE user_id = $user_id "; // Replace 'events' with your table name
+      $result = mysqli_query($conn, $sql);
+      
+      if (mysqli_num_rows($result) > 0) {
+          echo '<tbody>';
+          $rowNumber = 1;
+          while ($row = mysqli_fetch_assoc($result)) {
+              echo '<tr class="hoverable" data-info="'.$row["package_price"].'">';
+              echo '<th scope="row">' . $rowNumber++ . '</th>';
+              echo '<td>' . $row["title"] . '</td>';
+              echo '<td>' . $row["celebrant_name"] . '</td>';
+              echo '<td>' . $row["start_datetime"] . '</td>';
+              echo '<td>' . $row["end_datetime"] . '</td>';
+              echo '</tr>';
+          }
+          echo '</tbody>';
+      } else {
+          echo '<tbody><tr><td colspan="7">No events found</td></tr></tbody>';
+      }
+    ?>
     </tbody>
   </table>
   <div id="infoPopup" class="info-popup"></div>

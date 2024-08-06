@@ -2,7 +2,7 @@
 @include 'database.php';
 
 // Fetch future events from the database
-$sql = "SELECT * FROM tbl_events_list";
+$sql = "SELECT * FROM tbl_events_list WHERE status = 'complete'";
 $result = mysqli_query($conn, $sql);
 
 $events = array();
