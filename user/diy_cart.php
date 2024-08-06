@@ -164,6 +164,7 @@ if (isset($_POST['btn_check_out'])) {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     if ($query->num_rows > 0) {
                         while ($row = $query->fetch_assoc()) {
                             $imageURL = '../uploads/' . $row["image_url"];
@@ -204,6 +205,8 @@ if (isset($_POST['btn_check_out'])) {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                                                 <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width:400px; border-radius: 10px" alt="<?php echo $row['product_name']; ?>">
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3">
@@ -233,6 +236,9 @@ if (isset($_POST['btn_check_out'])) {
                                                 </a>
                                             </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -254,10 +260,13 @@ if (isset($_POST['btn_check_out'])) {
                         ?>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                         <div class="parent-container">
                             <div class="mx-auto items-center flex justify-center" style="margin: auto; display: flex; align-items: center; justify-content: center; height: 100%;">
                                 <img src="../img/logo.png" height="500" style="object-fit: cover;">
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -268,6 +277,9 @@ if (isset($_POST['btn_check_out'])) {
                                 <button type="submit" name="btn_check_out" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Checkout</button>
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
