@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_name'])) {
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./cssproj/home.css">
   <link rel="stylesheet" href="./cssproj/services.css">
+  <link rel="stylesheet" href="./cssproj/navbar.css">
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -359,7 +360,7 @@ if (!isset($_SESSION['user_name'])) {
         <ul class="navbar-nav mr-auto w-100 justify-content-end">
 
           <li class="nav-item active">
-            <a class="nav-link" style="color: #b5246f;" href="">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
+            <a class="nav-link active"  href="">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="./user/userhome.php">Home</a>
@@ -370,7 +371,7 @@ if (!isset($_SESSION['user_name'])) {
           <li class="nav-item ">
             <a class="nav-link " href="./user/diy.php">DIY Package</a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link " href="./user/diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
@@ -444,17 +445,17 @@ if (!isset($_SESSION['user_name'])) {
         <div class="pack">
           <h3>Package 1</h3>
           <p>Includes basic balloon decorations and simple party setups.</p>
-          <p>Starting at $200</p>
+          <p>Starting at ₱1200</p>
         </div>
         <div class="pack">
           <h3>Package 2</h3>
           <p>Includes advanced balloon decorations, themed setups, and additional services.</p>
-          <p>Starting at $500</p>
+          <p>Starting at ₱1500</p>
         </div>
         <div class="pack">
           <h3>Package 3</h3>
           <p>Includes premium balloon decorations, customized setups, and full-service planning.</p>
-          <p>Starting at $1000</p>
+          <p>Starting at ₱1800</p>
         </div>
       </div>
     </section>

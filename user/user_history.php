@@ -273,7 +273,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link"  style="color: #b5246f;">History</a>
+            <a class="nav-link active" href="user_history.php">History</a>
           </li>
 
           <li class="nav-item">
@@ -299,6 +299,7 @@ $desktop: only screen and (min-width:90em);
         <th scope="col"></th>
         <th scope="col">Event Name</th>
         <th scope="col">Celebrant Name</th>
+        <th scope="col">Package Name</th>
         <th scope="col">Start Time</th>
         <th scope="col">End Time</th>
       </tr>
@@ -306,7 +307,7 @@ $desktop: only screen and (min-width:90em);
     <tbody>
     <?php 
       $user_id = $_SESSION['user_id'];
-      $sql = "SELECT title, celebrant_name, package_price, start_datetime, end_datetime FROM tbl_events_list WHERE user_id = $user_id "; // Replace 'events' with your table name
+      $sql = "SELECT title, celebrant_name, package_price, package_name, start_datetime, end_datetime FROM tbl_events_list WHERE user_id = $user_id "; // Replace 'events' with your table name
       $result = mysqli_query($conn, $sql);
       
       if (mysqli_num_rows($result) > 0) {
@@ -317,6 +318,7 @@ $desktop: only screen and (min-width:90em);
               echo '<th scope="row">' . $rowNumber++ . '</th>';
               echo '<td>' . $row["title"] . '</td>';
               echo '<td>' . $row["celebrant_name"] . '</td>';
+              echo '<td>' . $row["package_name"] . '</td>';
               echo '<td>' . $row["start_datetime"] . '</td>';
               echo '<td>' . $row["end_datetime"] . '</td>';
               echo '</tr>';
