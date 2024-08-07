@@ -146,9 +146,9 @@ if (!isset($_SESSION['user_name'])) {
 
 <body>
 
-<?php
+  <?php
 
-if (isset($_SESSION['notif'])) {
+  if (isset($_SESSION['notif'])) {
     $notif = $_SESSION['notif'];
     echo "<script>
             Swal.fire({
@@ -161,9 +161,9 @@ if (isset($_SESSION['notif'])) {
                 toast: true,
             });
           </script>";
-    unset($_SESSION['notif']); 
-}
-?>
+    unset($_SESSION['notif']);
+  }
+  ?>
 
 
   <!-- NAVBAR -->
@@ -260,8 +260,19 @@ if (isset($_SESSION['notif'])) {
               </div>
             </div>
           </div>
-      <?php }
-      } ?>
+        <?php }
+      } else {
+        ?>
+        <div class="parent-container">
+          <div class="mx-auto items-center flex justify-center align-items-center text-center" style="display: flex; justify-content: center; align-items: center;">
+            <img src="../img/logo.png" alt="Empty Cart" class="img-fluid" style="height: 400px;">
+          </div>
+        </div>
+      <?php
+      }
+
+
+      ?>
     </div>
   </section>
 

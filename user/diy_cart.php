@@ -28,7 +28,7 @@ if (isset($_POST['btn_check_out'])) {
         mysqli_stmt_bind_param($stmt, str_repeat('i', count($selected_ids)), ...$selected_ids);
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: checkout_form.php");
+            header("Location: checkout_cart.php");
             exit();
         } else {
             echo "Error updating cart: " . mysqli_error($conn);
@@ -36,10 +36,13 @@ if (isset($_POST['btn_check_out'])) {
 
         mysqli_stmt_close($stmt);
     } else {
-        header("Location: checkout_form.php");
+        header("Location: checkout_cart.php");
+        exit();
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,38 +74,39 @@ if (isset($_POST['btn_check_out'])) {
 
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
         <div class="container">
-            <a style="opacity: 0; cursor: default;">Lhenewin Party Solution</a>
+            <a style="opacity: 0; cursor: default; ">Lhenewin Party Solution</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto w-100 justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
+
+                    <li class="nav-item ">
+                        <a class="nav-link " href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="userhome.php">Home</a>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="userhome.php">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="package.php">Packages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="diy.php">DIY Package</a>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="package.php">Packages</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link active" href="diy.php">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="9" cy="21" r="1" />
-                                <circle cx="20" cy="21" r="1" />
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                            </svg>
-                        </a>
+                        <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
                     </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="diy_cart.php">Cart</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="user_history.php">History</a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="../logout.php" class="nav-link">Logout</a>
                     </li>
+
+
                 </ul>
             </div>
         </div>
@@ -140,11 +144,11 @@ if (isset($_POST['btn_check_out'])) {
                                     <div class="card-body p-4">
                                         <div class="row d-flex justify-content-between align-items-center">
                                             <div class="col-md-2 col-lg-2 col-xl-2 d-flex align-items-center">
-                                            <input type="checkbox" name="selected_prod[]" value="<?php echo $row['cart_id']; ?>" id="checkbox_<?php echo $row['cart_id']; ?>" class="form-check-label">
+                                                <input type="checkbox" name="selected_prod[]" value="<?php echo $row['cart_id']; ?>" id="checkbox_<?php echo $row['cart_id']; ?>" class="form-check-label mx-2">
 
-                                                <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width: 200px;" alt="<?php echo $row['product_name']; ?>">
+                                                <img src="<?php echo $imageURL; ?>" class="img-fluid rounded-3" style="height: 150px; width: 300px; border-radius:10px;" alt="<?php echo $row['product_name']; ?>">
                                             </div>
-                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-md-4 col-lg-4 col-xl-3">
                                                 <p class="lead fw-normal mb-2" style="font-size: 30px; font-weight: 700; color: #FFC106;"><?php echo $row['product_name']; ?></p>
                                                 <p class="ellipsis-container"><span class="text-muted" style="font-weight: 800;">Description: <br></span><span style="font-size: 13px;"><?php echo $row['description']; ?></span></p>
                                             </div>
@@ -180,19 +184,36 @@ if (isset($_POST['btn_check_out'])) {
                             ?>
                             <div class="parent-container">
                                 <div class="mx-auto items-center flex justify-center align-items-center text-center" style="display: flex; justify-content: center; align-items: center;">
-                                    <img src="../images/emptycart.png" alt="Empty Cart" class="img-fluid" style="height: 300px;">
+                                    <img src="../img/logo.png" alt="Empty Cart" class="img-fluid" style="height: 400px;">
                                 </div>
+                                <h3 class="text-center my-3 mb-3">No DIY Package items are available on your cart!</h3>
                             </div>
                         <?php
                         }
                         ?>
-                        <div class="d-flex justify-content-between">
-                            <a href="../userhome.php" class="btn btn-warning">Continue Shopping</a>
-                            <input type="submit" name="btn_check_out" class="btn btn-success" value="Checkout">
-                        </div>
+                        <div class="d-flex justify-content-between mb-5">
+                            <?php
+                            include('../database.php');
+                            $user_id = $_SESSION['user_id'];
+
+                            $select = mysqli_query($conn, "SELECT * FROM imagespack");
+                            if (mysqli_num_rows($select) > 0) {
+                                while ($row = mysqli_fetch_assoc($select)) {
+                            ?>
+                                    <input type="hidden" name="package_id" value="<?php echo $row['id'] ?>">
+                                    <input type="submit" name="btn_check_out" class="btn btn-success w-100" value="Checkout">
+                            <?php
+                                }
+                            } else {
+                                echo "No records found.";
+                            }
+                            ?>
+
                     </form>
                 </div>
+                </form>
             </div>
+        </div>
         </div>
     </section>
 
