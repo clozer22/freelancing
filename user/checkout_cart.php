@@ -105,60 +105,8 @@ if (isset($_SESSION['grand_total'])) {
         <form class="custom-form" action="booking_form.php" method="POST">
             <div class="d-flex justify-content-between align-items-center border-bottom border-dark ">
                 <h1 class="font-weight-bold ">Booking Form</h1>
-                <h4 class="card-title">Total Price: ₱ <?php echo number_format($grand_total, 2); ?></h4>
             </div>
 
-            <?php
-            include('../database.php');
-
-
-            $user_id = $_SESSION['user_id'];
-
-            $select_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE isSelected = 1 AND id = $user_id");
-
-            $count_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM tbl_cart WHERE isSelected = 1 AND id = $user_id");
-            $count_result = mysqli_fetch_assoc($count_query);
-            $count = $count_result['count'];
-            $_SESSION['count'] = $count;
-
-            $grand_total = 0;
-
-            ?>
-            <h5 class="my-4">Your Items on Cart (<?php echo $count; ?>)</h5>
-
-            <div class="row my-4">
-
-
-
-                <?php
-                if (mysqli_num_rows($select_cart) > 0) {
-                    while ($row = mysqli_fetch_assoc($select_cart)) {
-                        $imageURL = '../uploads/' . $row["image_url"];
-                        $price = (float)$row['Price'];
-                        $grand_total += $price;
-                        $_SESSION['grand_total'] = $grand_total;
-                ?>
-
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="<?php echo $imageURL ?>" class="card-img-top" style="height: 200px;" alt="Image 1">
-                                <div class="card-body" style="height: 300px;">
-                                    <h5 class="card-title"><?php echo $row['product_name'] ?> </h5>
-                                    <h6 class="mb-3"> Quantity: <?php echo $row['Quantity']?></h6>
-                                    <h5>₱ <?php echo number_format($price, 2); ?></h5>
-                                    <div style="border-bottom: 2px solid gainsboro;"></div>
-                                    <h6 class="my-2">Description:</h6>
-                                    <div class="pt-1 ellipsis-container" style="line-height:normal">
-                                        <p style="font-size: 13px;"><?php echo $row['description']; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <?php
-                    }
-                }
-                ?>
-            </div>
 
 
 
