@@ -289,6 +289,19 @@ $desktop: only screen and (min-width:90em);
             }
 
         }
+
+        .ellipsis-container {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: horizontal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 30%;
+        }
+
+        .ellipsis-container p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -372,37 +385,42 @@ $desktop: only screen and (min-width:90em);
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill"><?php echo $cart_count; ?></span>
                 </h4>
-                <ul class="list-group mb-3 sticky-top">
-                    <?php
-                    include('../database.php');
+                <?php
+                include('../database.php');
 
-                    $user_id = $_SESSION['user_id'];
+                $select_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE isSelected = 1 AND id = {$_SESSION['user_id']}");
+                $grand_total = 0;
+                if (mysqli_num_rows($select_cart) > 0) {
+                    while ($row = mysqli_fetch_assoc($select_cart)) {
+                        $imageURL = '../uploads/' . $row["image_url"];
 
-                    $query = $conn->query("
-                                SELECT * FROM tbl_cart WHERE id = $user_id
-                            ");
-
-                    if ($query->num_rows > 0) {
-                        while ($row = $query->fetch_assoc()) {
-                            $imageURL = '../uploads/' . $row["image_url"];
-                    ?>
+                ?>
+                        <ul class="list-group mb-3 sticky-top">
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0"><?php echo $row['product_name'] ?></h6>
-                                    <small class="text-muted"><?php echo $row['description'] ?></small>
-                                </div>
-                                <span class="text-muted">₱ <?php echo $row['Price'] ?></span>
-                            </li>
-                    <?php
-                        }
-                    }
-                    ?>
+                                <div class="d-flex">
+                                    <img src="<?php echo $imageURL ?>" class=" rounded-2" style="height:50px; width: 70px; border-radius: 5px;">
 
-                    <li class="list-group-item bg-dark text-white d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>₱ <?php echo $total_price ?></strong>
-                    </li>
-                </ul>
+                                    <div class="mx-2">
+                                        <h6 class="my-0"><?php echo $row['product_name'] ?></h6>
+                                        <small class="text-muted ellipsis-container"></small>
+
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <span class="text-muted"><?php echo $row['Price'] ?></span>
+                                </div>
+
+                            </li>
+
+                            <li class="list-group-item bg-dark text-white d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong>$20</strong>
+                            </li>
+                        </ul>
+                <?php
+                    }
+                }
+                ?>
             </div>
 
             <div class="col-md-8 order-md-1">
