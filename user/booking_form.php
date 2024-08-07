@@ -11,111 +11,182 @@ if (!isset($_SESSION['user_name'])) {
 $package_id = 0; // Initialize package_id
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (!isset($_GET['package']) || empty($_GET['package'])) {
-        header('Location: package.php?error=invalid_package');
-        exit();
-    }
+    $type = isset($_GET['type']) ? $_GET['type'] : 'booking'; // Default type to 'booking'
 
-    $package_id = intval($_GET['package']);
+    if ($type === 'booking') {
+        if (!isset($_GET['package']) || empty($_GET['package'])) {
+            header('Location: package.php?error=invalid_package');
+            exit();
+        }
+        $package_id = intval($_GET['package']);
+    } elseif ($type === 'cart') {
+        // For cart, we don't require the package parameter
+        // You might want to handle the cart logic here
+        // For example, you could retrieve all items in the cart
 
-    $stmt = $conn->prepare("SELECT Product, Price, file_name FROM imagespack WHERE id = ?");
-    if ($stmt === false) {
-        die('Prepare failed: ' . $conn->error);
-    }
+        // If package is provided, use it; otherwise, set to null or a default value
+        $package_id = isset($_GET['package']) ? intval($_GET['package']) : null;
 
-    $stmt->bind_param("i", $package_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        if ($package_id !== null) {
+            // If a package_id is provided, you can still use it
+            $stmt = $conn->prepare("SELECT Product, Price, file_name FROM images WHERE id = ?");
+            if ($stmt === false) {
+                die('Prepare failed: ' . $conn->error);
+            }
+            $stmt->bind_param("i", $package_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $stmt->close();
+                echo "Package ID: " . $package_id;
+            } else {
+                $stmt->close();
+                // Note: We're not redirecting here, just logging
+                error_log("Package not found: " . $package_id);
+            }
+        } else {
+            // Handle the case where no package is specified for the cart
+            // For example, you could retrieve all items in the cart
+            echo "Displaying all items in the cart";
+        }
+    } else {
+        // Default case (neither 'booking' nor 'cart')
+        if (!isset($_GET['package']) || empty($_GET['package'])) {
+            header('Location: package.php?error=invalid_package');
+            exit();
+        }
+        $package_id = intval($_GET['package']);
 
-    if ($result->num_rows == 0) {
+        $stmt = $conn->prepare("SELECT Product, Price, file_name FROM imagespack WHERE id = ?");
+        if ($stmt === false) {
+            die('Prepare failed: ' . $conn->error);
+        }
+        $stmt->bind_param("i", $package_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 0) {
+            $stmt->close();
+            header('Location: package.php?error=package_not_found');
+            exit();
+        }
+        $row = $result->fetch_assoc();
         $stmt->close();
-        header('Location: package.php?error=package_not_found');
-        exit();
     }
-
-    $row = $result->fetch_assoc();
-    $stmt->close();
 }
 
-function generateRandomColor() {
+function generateRandomColor()
+{
     return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 }
 
+// 1. post on tbl_cart and tbl_event_list
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($conn)) {
         die('Database connection not established.');
     }
-    
-    // Get package_id from POST data
-    $package_id = isset($_POST['package_id']) ? mysqli_real_escape_string($conn, $_POST['package_id']) : '';
 
-    $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
-    $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
-    $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
-    $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
-    $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
-    $status = 'pending';
-    $color = generateRandomColor();
-    $text_color = '#000000';
-    $user_id = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("INSERT INTO tbl_events_list (title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if ($stmt === false) {
-        die('Prepare failed: ' . $conn->error);
-    }
+    // Check if type is set in GET request, otherwise default to 'booking'
+    $type = isset($_GET['type']) ? $_GET['type'] : 'booking'; // Default type to 'booking'
 
-    $stmt->bind_param("sssssssss", $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
-    $stmt->execute();
+    if ($type === 'booking') {
 
-    if ($stmt->affected_rows > 0) {
-        $event_id = $conn->insert_id;
-        $_SESSION['event_id'] = $event_id;
-    
-        // Fetch Product, Price, and file_name from imagespack based on package_id
-        $getimagepackinfo = $conn->prepare("SELECT Product, Price, file_name FROM imagespack WHERE id = ?");
-        if ($getimagepackinfo === false) {
+        // Get package_id from POST data
+        $package_id = isset($_POST['package_id']) ? mysqli_real_escape_string($conn, $_POST['package_id']) : '';
+
+        $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
+        $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
+        $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
+        $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
+        $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
+        $status = 'pending';
+        $color = generateRandomColor();
+        $text_color = '#000000';
+        $user_id = $_SESSION['user_id'];
+
+
+
+        $stmt = $conn->prepare("INSERT INTO tbl_events_list (title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if ($stmt === false) {
             die('Prepare failed: ' . $conn->error);
         }
-        $getimagepackinfo->bind_param("i", $package_id);
-        $getimagepackinfo->execute();
-        $getimagepackinfo->bind_result($package_name, $package_price, $file_name);
-        $getimagepackinfo->fetch();
-        $getimagepackinfo->close();
-    
-        $image_url = $file_name; // Use file_name as image_url
-    
-        // Insert into tbl_cart
-        $product_name = $package_name;
-        $price = $package_price;
-        $quantity = 1;
-        $date = date('Y-m-d');
-        $isSelected = 1;
-    
-        $cart_stmt = $conn->prepare("INSERT INTO tbl_cart (product_name, Price, Quantity, Date, image_url, id, description, isSelected) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        if ($cart_stmt === false) {
-            die('Prepare failed: ' . $conn->error);
-        }
-    
-        $cart_stmt->bind_param("sdissssi", $product_name, $price, $quantity, $date, $image_url, $user_id, $description, $isSelected);
-        $cart_stmt->execute();
-    
-        if ($cart_stmt->affected_rows > 0) {
+
+        $stmt->bind_param("sssssssss", $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $event_id = $conn->insert_id;
+            $_SESSION['event_id'] = $event_id;
+
+            // Fetch Product, Price, and file_name from imagespack based on package_id
+            $getimagepackinfo = $conn->prepare("SELECT Product, Price, file_name FROM imagespack WHERE id = ?");
+            if ($getimagepackinfo === false) {
+                die('Prepare failed: ' . $conn->error);
+            }
+            $getimagepackinfo->bind_param("i", $package_id);
+            $getimagepackinfo->execute();
+            $getimagepackinfo->bind_result($package_name, $package_price, $file_name);
+            $getimagepackinfo->fetch();
+            $getimagepackinfo->close();
+
+            $image_url = $file_name; // Use file_name as image_url
+
+            // Insert into tbl_cart
+            $product_name = $package_name;
+            $price = $package_price;
+            $quantity = 1;
+            $date = date('Y-m-d');
+            $isSelected = 1;
+
+            $cart_stmt = $conn->prepare("INSERT INTO tbl_cart (product_name, Price, Quantity, Date, image_url, id, description, isSelected) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            if ($cart_stmt === false) {
+                die('Prepare failed: ' . $conn->error);
+            }
+
+            $cart_stmt->bind_param("sdissssi", $product_name, $price, $quantity, $date, $image_url, $user_id, $description, $isSelected);
+            $cart_stmt->execute();
+
+            if ($cart_stmt->affected_rows > 0) {
+                $cart_stmt->close();
+                header('Location: checkout_cart.php');
+                exit();
+            } else {
+                echo "Error inserting into cart: " . $cart_stmt->error;
+            }
             $cart_stmt->close();
-            header('Location: checkout_cart.php');
-            exit();
         } else {
-            echo "Error inserting into cart: " . $cart_stmt->error;
+            echo "Error inserting event: " . $stmt->error;
         }
-        $cart_stmt->close();
-    } else {
-        echo "Error inserting event: " . $stmt->error;
-    }
-    
 
-    $stmt->close();
-    $conn->close();
+        $stmt->close();
+        $conn->close();
+    } elseif ($type === 'cart') {
+        // Get all POST data
+        $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
+        $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
+        $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
+        $date = date('Y-m-d');
+        $image_url = isset($_POST['image_url']) ? $_POST['image_url'] : '';
+        $user_id = $_SESSION['user_id'];
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $isSelected = 1; // Set to 1 automatically
+    
+        // Echo log of all values
+        echo "Cart Item Log:<br>";
+        echo "Product Name: " . $product_name . "<br>";
+        echo "Price: $" . number_format($price, 2) . "<br>";
+        echo "Quantity: " . $quantity . "<br>";
+        echo "Date: " . $date . "<br>";
+        echo "Image URL: " . $image_url . "<br>";
+        echo "User ID: " . $user_id . "<br>";
+        echo "Description: " . $description . "<br>";
+        echo "Is Selected: " . $isSelected . "<br>";
+    }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -194,11 +265,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="custom-form" action="booking_form.php" method="POST">
             <h1 class="font-weight-bold border-bottom border-dark pb-3">Booking Form</h1>
 
-          
+
             <input type="text" hidden class="form-control" id="package_id" name="package_id" value="<?php echo htmlspecialchars($package_id); ?>">
 
 
-          
+
 
             <div class="row mb-3">
                 <div class="col-md-6">
