@@ -313,7 +313,7 @@ $desktop: only screen and (min-width:90em);
           echo '<tbody>';
           $rowNumber = 1;
           while ($row = mysqli_fetch_assoc($result)) {
-              echo '<tr class="hoverable" data-info="'.$row["description"].'">';
+              echo '<tr class="hoverable" data-info="'.$row["description"] ? "No ".'">'
               echo '<th scope="row">' . $rowNumber++ . '</th>';
               echo '<td>' . $row["title"] . '</td>';
               echo '<td>' . $row["celebrant_name"] . '</td>';
