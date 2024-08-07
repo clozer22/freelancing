@@ -306,14 +306,14 @@ $desktop: only screen and (min-width:90em);
     <tbody>
     <?php 
       $user_id = $_SESSION['user_id'];
-      $sql = "SELECT title, celebrant_name, start_datetime, end_datetime FROM tbl_events_list WHERE user_id = $user_id "; // Replace 'events' with your table name
+      $sql = "SELECT title, celebrant_name, description, start_datetime, end_datetime FROM tbl_events_list WHERE user_id = $user_id "; // Replace 'events' with your table name
       $result = mysqli_query($conn, $sql);
       
       if (mysqli_num_rows($result) > 0) {
           echo '<tbody>';
           $rowNumber = 1;
           while ($row = mysqli_fetch_assoc($result)) {
-              echo '<tr class="hoverable" data-info="">';
+              echo '<tr class="hoverable" data-info="'.$row["description"].'">';
               echo '<th scope="row">' . $rowNumber++ . '</th>';
               echo '<td>' . $row["title"] . '</td>';
               echo '<td>' . $row["celebrant_name"] . '</td>';

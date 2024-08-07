@@ -177,14 +177,14 @@ if (!isset($_SESSION['user_name'])) {
 
     #carouselExampleControls {
       width: 80%;
-      height: 500px;
+      height: 700px;
       margin: 0 auto;
       overflow: hidden;
     }
 
-    #carouselExampleControls .carousel-inner img {
+    .carousel-inner img {
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
     }
 
@@ -570,7 +570,7 @@ input:nth-of-type(6):checked ~ main#carousel {
       <h1 style="font-family: 'myFont'; font-size: 5rem; line-height: 100px;margin-bottom: 50px">Lhenewin Party Solution</h1>
       <h1 style="margin-top: 50px">Making Your Parties Unforgettable!</h1>
       <p>Expert Balloon and Party Setup Services</p>
-      <a href="#contact" class="cta-button">Reserve Now</a>
+      <a href="#calendar" class="cta-button">Reserve Now</a>
     </section>
 
     <h1 style="text-align: center; margin-top: 100px">Our Services</h1>
@@ -692,13 +692,16 @@ input:nth-of-type(6):checked ~ main#carousel {
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="First slide">
+            <img class="d-block w-100" src="./img/1.jpg" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="Second slide">
+            <img class="d-block w-100" src="./img/2.jpg" alt="Second slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="Third slide">
+            <img class="d-block w-100" src="./img/3.jpg" alt="Third slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./img/4.jpg" alt="Third slide">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
