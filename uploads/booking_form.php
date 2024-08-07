@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
         if ($cart_stmt->affected_rows > 0) {
             $cart_stmt->close();
-            header('Location: test_checkout.php');
+            header('Location: checkout_cart.php');
             exit();
         } else {
             echo "Error inserting into cart: " . $cart_stmt->error;
