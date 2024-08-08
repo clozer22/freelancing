@@ -7,25 +7,54 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
-// Initialize variables
-$package_id = 0; // Initialize package_id
+// Initialize variables for package name, price, and title
+$package_name = '';
+$package_price = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $type = isset($_GET['type']) ? $_GET['type'] : 'booking'; // Default type to 'booking'
-
-    if ($type === 'booking') {
-        if (!isset($_GET['package']) || empty($_GET['package'])) {
-            header('Location: package.php?error=invalid_package');
-            exit();
-        }
-        $package_id = intval($_GET['package']);
-    } elseif ($type === 'cart') {
-        
+    // Check if the 'package' query parameter is set and not empty
+    if (!isset($_GET['package']) || empty($_GET['package'])) {
+        // Redirect to package.php with an error message
+        header('Location: package.php?error=invalid_package');
+        exit();
     }
+
+    // Sanitize the input
+    $id = intval($_GET['package']); // Convert the id to an integer for safety
+
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("SELECT Product, Price FROM imagespack WHERE id = ?");
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
+
+    // Bind the id parameter to the SQL statement
+    $stmt->bind_param("i", $id);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Store the result
+    $result = $stmt->get_result();
+
+    // Check if a record was found
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $package_name = $row['Product'];
+        $package_price = $row['Price'];
+    } else {
+        // No record found, redirect to package.php with an error message
+        $stmt->close();
+        header('Location: package.php?error=package_not_found');
+        exit();
+    }
+
+    // Close the statement
+    $stmt->close();
 }
 
-function generateRandomColor()
-{
+// Function to generate a random hex color
+function generateRandomColor() {
     return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 }
 
@@ -35,89 +64,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die('Database connection not established.');
     }
 
+    // Retrieve and sanitize form inputs
+    $package_name = isset($_POST['package_name']) ? mysqli_real_escape_string($conn, $_POST['package_name']) : $package_name;
+    $package_price = isset($_POST['package_price']) ? mysqli_real_escape_string($conn, $_POST['package_price']) : $package_price;
+    $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
+    $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
+    $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
+    $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
+    $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
+    $status = 'pending';
+    $color = generateRandomColor();
+    $text_color = '#000000'; // Default text color
+    $user_id = $_SESSION['user_id']; // Get user_id from session
 
-    // Check if type is set in GET request, otherwise default to 'booking'
-    $type = isset($_GET['type']) ? $_GET['type'] : 'booking'; // Default type to 'booking'
-
-    if ($type === 'booking') {
-
-        // Get package_id from POST data
-        $package_id = isset($_POST['package_id']) ? mysqli_real_escape_string($conn, $_POST['package_id']) : '';
-
-        $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
-        $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
-        $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
-        $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
-        $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
-        $status = 'pending';
-        $color = generateRandomColor();
-        $text_color = '#000000';
-        $user_id = $_SESSION['user_id'];
-
-
+    // Prepare and execute the insert query
+    $stmt = $conn->prepare("INSERT INTO tbl_events_list (package_name, package_price, title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $stmt = $conn->prepare("INSERT INTO tbl_events_list (title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt === false) {
             die('Prepare failed: ' . $conn->error);
         }
 
-        $stmt->bind_param("sssssssss", $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
-        $stmt->execute();
+    // Bind parameters and execute the statement
+    $stmt->bind_param("sdsssssssss", $package_name, $package_price, $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
+    $stmt->execute();
 
-        if ($stmt->affected_rows > 0) {
-            $event_id = $conn->insert_id;
-            $_SESSION['event_id'] = $event_id;
-
-            // Fetch Product, Price, and file_name from imagespack based on package_id
-            $getimagepackinfo = $conn->prepare("SELECT Product, Price, file_name FROM imagespack WHERE id = ?");
-            if ($getimagepackinfo === false) {
-                die('Prepare failed: ' . $conn->error);
-            }
-            $getimagepackinfo->bind_param("i", $package_id);
-            $getimagepackinfo->execute();
-            $getimagepackinfo->bind_result($package_name, $package_price, $file_name);
-            $getimagepackinfo->fetch();
-            $getimagepackinfo->close();
-
-            $image_url = $file_name; // Use file_name as image_url
-
-            // Insert into tbl_cart
-            $product_name = $package_name;
-            $price = $package_price;
-            $quantity = 1;
-            $date = date('Y-m-d');
-            $isSelected = 1;
-
-            $cart_stmt = $conn->prepare("INSERT INTO tbl_cart (product_name, Price, Quantity, Date, image_url, id, description, isSelected) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($cart_stmt === false) {
-                die('Prepare failed: ' . $conn->error);
-            }
-
-            $cart_stmt->bind_param("sdissssi", $product_name, $price, $quantity, $date, $image_url, $user_id, $description, $isSelected);
-            $cart_stmt->execute();
-
-            if ($cart_stmt->affected_rows > 0) {
-                $cart_stmt->close();
-                header('Location: checkout_cart.php');
-                exit();
-            } else {
-                echo "Error inserting into cart: " . $cart_stmt->error;
-            }
-            $cart_stmt->close();
-        } else {
-            echo "Error inserting event: " . $stmt->error;
-        }
-
-        $stmt->close();
-        $conn->close();
-    } elseif ($type === 'cart') {
-      // wala muna
+    // Check if the record was inserted successfully
+    if ($stmt->affected_rows > 0) {
+        // Get the ID of the newly inserted row
+        $event_id = $conn->insert_id;
+        // Store the event_id in the session
+        $_SESSION['event_id'] = $event_id;
+        // Redirect to the checkout page
+        header('Location: test_checkout.php');
+        exit();
+    } else {
+        echo "Error: " . $stmt->error;
     }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -206,6 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="title" class="form-label" name="title">Title:</label>
                     <input type="text" placeholder="Input Title of event" class="form-control" id="title" name="title" required>
                 </div>
+
                 <div class="col-md-6">
                     <label for="celebrant_name" class="form-label">Celebrant Name</label>
                     <input type="text" placeholder="Input Celebrant Name" class="form-control" id="celebrant_name" name="celebrant_name" required>

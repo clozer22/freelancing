@@ -24,12 +24,10 @@ if (isset($_POST['add_cart'])) {
     $check = mysqli_query($conn, "SELECT Quantity, Price FROM tbl_cart WHERE id = '$user_id' AND product_name = '$product'");
     $result = mysqli_fetch_assoc($check);
 
-    // Initialize variables to handle query results
     $update_cart_query = false;
     $insert_cart_query = false;
 
     if ($result) {
-        // Product exists, update the quantity and price
         $existing_quantity = $result['Quantity'];
         $existing_price = $result['Price'];
         $new_quantity = $existing_quantity + $quantity;
@@ -37,7 +35,6 @@ if (isset($_POST['add_cart'])) {
 
         $update_cart_query = mysqli_query($conn, "UPDATE tbl_cart SET Quantity = '$new_quantity', Price = '$new_price', date = '$date' WHERE id = '$user_id' AND product_name = '$product'");
     } else {
-        // Product doesn't exist, insert new record
         $insert_cart_query = mysqli_query($conn, "INSERT INTO tbl_cart (product_name, Price, Quantity, date, id, image_url, description) VALUES ('$product', '$total_price', '$quantity', '$date', '$user_id', '$image', '$description')");
     }
 

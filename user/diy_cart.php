@@ -12,6 +12,15 @@ include('../database.php');
 if (isset($_POST['btn_check_out'])) {
     $selected_products = $_POST['selected_prod'] ?? array();
 
+    if (empty($selected_products)) {
+        $_SESSION['notif'] = [
+            'type' => 'error',
+            'message' => 'Please Select an item first!',
+        ];
+        header("Location: diy_cart.php");
+        exit();
+    }
+
     // Set all items to unselected
     $update_all_query = "UPDATE tbl_cart SET isSelected = 0";
     if (!mysqli_query($conn, $update_all_query)) {
@@ -19,29 +28,26 @@ if (isset($_POST['btn_check_out'])) {
         exit();
     }
 
-    if (!empty($selected_products)) {
-        $selected_ids = array_map('intval', $selected_products);
-        $placeholders = implode(',', array_fill(0, count($selected_ids), '?'));
+    $selected_ids = array_map('intval', $selected_products);
+    $placeholders = implode(',', array_fill(0, count($selected_ids), '?'));
 
-        $update_query = "UPDATE tbl_cart SET isSelected = 1 WHERE cart_id IN ($placeholders)";
-        $stmt = mysqli_prepare($conn, $update_query);
-        mysqli_stmt_bind_param($stmt, str_repeat('i', count($selected_ids)), ...$selected_ids);
+    $update_query = "UPDATE tbl_cart SET isSelected = 1 WHERE cart_id IN ($placeholders)";
+    $stmt = mysqli_prepare($conn, $update_query);
+    mysqli_stmt_bind_param($stmt, str_repeat('i', count($selected_ids)), ...$selected_ids);
 
-        if (mysqli_stmt_execute($stmt)) {
-            header("Location: booking_form.php?type=cart");
-            exit();
-        } else {
-            echo "Error updating cart: " . mysqli_error($conn);
-        }
-
-        mysqli_stmt_close($stmt);
-    } else {
-        header("Location: checkout_cart.php");
+    if (mysqli_stmt_execute($stmt)) {
+        // Redirect to checkout page without error message
+        // Initialize variables to handle query results
+        header("Location: booking_form.php?type=cart");
         exit();
+    } else {
+        echo "Error updating cart: " . mysqli_error($conn);
     }
-}
 
+    mysqli_stmt_close($stmt);
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -53,6 +59,7 @@ if (isset($_POST['btn_check_out'])) {
     <title>Document</title>
     <link rel="stylesheet" href="../cssproj/home.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
@@ -73,6 +80,25 @@ if (isset($_POST['btn_check_out'])) {
 </head>
 
 <body>
+
+    <?php
+
+    if (isset($_SESSION['notif'])) {
+        $notif = $_SESSION['notif'];
+        echo "<script>
+            Swal.fire({
+                position: 'top',
+                icon: '{$notif['type']}',
+                title: '{$notif['message']}',
+                showConfirmButton: false,
+                width: '70%',
+                timer: 1500,
+                toast: true,
+            });
+          </script>";
+        unset($_SESSION['notif']);
+    }
+    ?>
     <!-- NAVBAR -->
     <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
         <div class="container">
@@ -92,11 +118,11 @@ if (isset($_POST['btn_check_out'])) {
                     <li class="nav-item ">
                         <a class="nav-link " href="package.php">Packages</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link " href="diy_cart.php">Cart</a>
+                        <a class="nav-link active" href="diy_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link " href="user_history.php">History</a>
