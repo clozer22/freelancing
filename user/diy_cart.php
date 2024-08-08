@@ -37,7 +37,8 @@ if (isset($_POST['btn_check_out'])) {
 
     if (mysqli_stmt_execute($stmt)) {
         // Redirect to checkout page without error message
-        header("Location: checkout_cart.php");
+        // Initialize variables to handle query results
+        header("Location: booking_form.php?type=cart&isSelected=1");
         exit();
     } else {
         echo "Error updating cart: " . mysqli_error($conn);
@@ -117,11 +118,11 @@ if (isset($_POST['btn_check_out'])) {
                     <li class="nav-item ">
                         <a class="nav-link " href="package.php">Packages</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link " href="diy_cart.php">Cart</a>
+                        <a class="nav-link active" href="diy_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link " href="user_history.php">History</a>
