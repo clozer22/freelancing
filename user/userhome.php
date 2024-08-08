@@ -239,7 +239,7 @@ $desktop: only screen and (min-width:90em);
             <a class="nav-link " href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" style="color: #b5246f;" href="">Home</a>
+            <a class="nav-link active" href="">Home</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="package.php">Packages</a>

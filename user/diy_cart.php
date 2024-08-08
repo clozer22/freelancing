@@ -119,7 +119,7 @@ if (isset($_POST['btn_check_out'])) {
                         <a class="nav-link " href="package.php">Packages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: #b5246f;" href="diy.php">DIY Package</a>
+                        <a class="nav-link" href="diy.php">DIY Package</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link active" href="diy_cart.php">Cart</a>
