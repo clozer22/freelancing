@@ -200,7 +200,7 @@ if (isset($_POST['book_button'])) {
                         <a class="nav-link " href="userhome.php">Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" style="color: #b5246f;" href="package.php">Packages</a>
+                        <a class="nav-link active" href="package.php">Packages</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link " href="diy.php">DIY Package</a>
