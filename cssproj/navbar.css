@@ -24,7 +24,10 @@
   .nav-item {
     padding: 10px 5px;
   }
-  .navbar .nav-link {
+  .nav-link {
+    font-size: 18px;
+  }
+  .navbar {
     font-size: 20px;
     /* margin-left: 10px; */
     font-weight: bold;
@@ -38,13 +41,19 @@
     color: white;
   }
   .nav-link:hover, .navbar-brand:hover{
-    color: #8ac3ff;
+    color: #194b81;
+    transform: scale(1.1) translateY(-5px);
+    transition: .2s;
   }
   .nav-link:focus, .navbar-brand:focus{
     color: #8ac3ff;
   }
   .active{
-    color: #8ac3ff;
+    color: #d74370;
+    font-weight: bold;
+  }
+  .active:hover{
+    color: #d74370;
   }
   /* DONE */
   

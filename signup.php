@@ -92,7 +92,7 @@ if(isset($_POST['register'])){
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contact</a>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #b5246f;" href="login.php">Login</a>
+                    <a class="nav-link active" href="login.php">Login</a>
                 </li>
             </ul>
         </div>

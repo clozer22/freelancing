@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_name'])) {
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./cssproj/home.css">
   <link rel="stylesheet" href="./cssproj/services.css">
+  <link rel="stylesheet" href="./cssproj/navbar.css">
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -176,14 +177,14 @@ if (!isset($_SESSION['user_name'])) {
 
     #carouselExampleControls {
       width: 80%;
-      height: 500px;
+      height: 700px;
       margin: 0 auto;
       overflow: hidden;
     }
 
-    #carouselExampleControls .carousel-inner img {
+    .carousel-inner img {
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
     }
 
@@ -340,6 +341,181 @@ if (!isset($_SESSION['user_name'])) {
         border: 2px solid black;
         border-radius: 25px;
       }
+      /* for carousel in Packages */
+      .packCar {
+  height: 600px;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 500px 100px;
+  grid-template-columns: 1fr 30px 30px 30px 30px 30px 30px 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+main#carousel {
+  grid-row: 1 / 2;
+  grid-column: 1 / 9;
+  width: 100vw;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  --items: 6;
+  --middle: 3;
+  --position: 1;
+  pointer-events: none;
+}
+
+div.item {
+  position: absolute;
+  width: 300px;
+  height: 420px;
+  padding: 20px;
+  align-items: center;
+  border-radius: 8px;
+  background-color: coral;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --r: calc(var(--position) - var(--offset));
+  --abs: max(calc(var(--r) * -1), var(--r));
+  transition: all 0.25s linear;
+  transform: rotateY(calc(-10deg * var(--r))) translateX(calc(-300px * var(--r)));
+  z-index: calc((var(--position) - var(--abs)));
+}
+
+div.item h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #4f0c78;
+  font-weight: 900;
+}
+
+div.item h5 {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+div.item h4.text-right {
+  margin: 0;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+  align-self: flex-end;
+}
+
+div.item h3, div.item h5, div.item h4 {
+  text-align: center;
+}
+
+div.item:hover {
+  background-color: #ff6f61;
+}
+div.item:nth-of-type(1) h5 {
+  color: #216a9c; /* Contrast color */
+}
+div.item:nth-of-type(2) h5{
+  color: #801744; /* Contrast color */
+}
+div.item:nth-of-type(3) h5{
+  color: #5c3509; /* Contrast color */
+}
+div.item:nth-of-type(4) h5{
+  color: #db7012; /* Contrast color */
+}
+div.item:nth-of-type(5) h5{
+  color: #660091; /* Contrast color */
+}
+div.item:nth-of-type(6) h5{ /* Styles for the new slide */
+  color: #0e244d; /* Contrast color */
+}
+
+/*================================= */
+
+div.item:nth-of-type(1) {
+  --offset: 1;
+  background: rgb(55,234,241);
+background: linear-gradient(180deg, rgba(55,234,241,1) 0%, rgba(144,241,239,1) 16%, rgba(215,251,255,1) 100%);
+}
+div.item:nth-of-type(2) {
+  --offset: 2;
+  background: rgb(255,71,174);
+background: linear-gradient(180deg, rgba(255,71,174,1) 0%, rgba(255,112,166,1) 16%, rgba(254,240,255,1) 100%);
+}
+div.item:nth-of-type(3) {
+  --offset: 3;
+  background: rgb(255,139,50);
+background: linear-gradient(180deg, rgba(255,139,50,1) 0%, rgba(255,151,112,1) 16%, rgba(255,236,224,1) 100%);
+}
+div.item:nth-of-type(4) {
+  --offset: 4;
+  background: rgb(255,191,14);
+background: linear-gradient(180deg, rgba(255,191,14,1) 0%, rgba(255,214,112,1) 16%, rgba(255,245,217,1) 100%);
+}
+div.item:nth-of-type(5) {
+  --offset: 5;
+  background: rgb(251,234,37);
+background: linear-gradient(180deg, rgba(251,234,37,1) 0%, rgba(233,255,112,1) 16%, rgba(255,254,210,1) 100%);
+}
+div.item:nth-of-type(6) {
+  --offset: 6;
+  background: rgb(65,117,255);
+background: linear-gradient(180deg, rgba(65,117,255,1) 0%, rgba(112,161,255,1) 16%, rgba(221,226,255,1) 100%);
+}
+
+input:nth-of-type(1) {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(1):checked ~ main#carousel {
+  --position: 1;
+}
+
+input:nth-of-type(2) {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(2):checked ~ main#carousel {
+  --position: 2;
+}
+
+input:nth-of-type(3) {
+  grid-column: 4 /5;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(3):checked ~ main#carousel {
+  --position: 3;
+}
+
+input:nth-of-type(4) {
+  grid-column: 5 / 6;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(4):checked ~ main#carousel {
+  --position: 4;
+}
+
+input:nth-of-type(5) {
+  grid-column: 6 / 7;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(5):checked ~ main#carousel {
+  --position: 5;
+}
+
+input:nth-of-type(6) {
+  grid-column: 7 / 8;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(6):checked ~ main#carousel {
+  --position: 6;
+}
+
     }
   </style>
 </head>
@@ -359,7 +535,7 @@ if (!isset($_SESSION['user_name'])) {
         <ul class="navbar-nav mr-auto w-100 justify-content-end">
 
           <li class="nav-item active">
-            <a class="nav-link" style="color: #b5246f;" href="">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
+            <a class="nav-link active"  href="">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="./user/userhome.php">Home</a>
@@ -370,7 +546,7 @@ if (!isset($_SESSION['user_name'])) {
           <li class="nav-item ">
             <a class="nav-link " href="./user/diy.php">DIY Package</a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link " href="./user/diy_cart.php">Cart</a>
           </li>
           <li class="nav-item ">
@@ -394,7 +570,7 @@ if (!isset($_SESSION['user_name'])) {
       <h1 style="font-family: 'myFont'; font-size: 5rem; line-height: 100px;margin-bottom: 50px">Lhenewin Party Solution</h1>
       <h1 style="margin-top: 50px">Making Your Parties Unforgettable!</h1>
       <p>Expert Balloon and Party Setup Services</p>
-      <a href="#contact" class="cta-button">Reserve Now</a>
+      <a href="#calendar" class="cta-button">Reserve Now</a>
     </section>
 
     <h1 style="text-align: center; margin-top: 100px">Our Services</h1>
@@ -437,26 +613,78 @@ if (!isset($_SESSION['user_name'])) {
         </div>
       </div>
     </section>
-
-    <section class="content-section packages" id="packages">
-      <h2>Packages & Pricing</h2>
-      <div class="package">
-        <div class="pack">
-          <h3>Package 1</h3>
-          <p>Includes basic balloon decorations and simple party setups.</p>
-          <p>Starting at $200</p>
-        </div>
-        <div class="pack">
-          <h3>Package 2</h3>
-          <p>Includes advanced balloon decorations, themed setups, and additional services.</p>
-          <p>Starting at $500</p>
-        </div>
-        <div class="pack">
-          <h3>Package 3</h3>
-          <p>Includes premium balloon decorations, customized setups, and full-service planning.</p>
-          <p>Starting at $1000</p>
-        </div>
+    <h2 class="text-center">Packages</h2>
+    <section class="packCar">
+      
+    <input type="radio" name="position" />
+    <input type="radio" name="position" />
+    <input type="radio" name="position" />
+    <input type="radio" name="position" checked/>
+    <input type="radio" name="position" />
+    <input type="radio" name="position" />
+    <main id="carousel">
+      <div class="item">
+        <h3>Package A</h3>
+        <h5>2 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Freebies: 10pcs Toypack</h5>
+        <h4 class="text-right">Starting at ₱1200</h4>
       </div>
+      <div class="item">
+        <h3>Package B</h3>
+        <h5>1 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Facepainting</h5>
+        <h5>Freebies: 10pcs Toypack</h5>
+        <h4 class="text-right">Starting at ₱1500</h4>
+      </div>
+      <div class="item">
+        <h3>Package C</h3>
+        <h5>2 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Facepainting</h5>
+        <h5>Freebies: 10pcs Toypack 10 Balloon with Stick</h5>
+        <h4 class="text-right">Starting at ₱1500</h4>
+      </div>
+      <div class="item">
+        <h3>Package D</h3>
+        <h5>2 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Giant Bubble Show</h5>
+        <h5>Freebies: 10pcs Toypack 10 Balloon with Stick</h5>
+        <h4 class="text-right">Starting at ₱1500</h4>
+      </div>
+      <div class="item">
+        <h3>Package E</h3>
+        <h5>2 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Pupper Show</h5>
+        <h5>Freebies: 10pcs Toypack 10 Balloon with Stick</h5>
+        <h4 class="text-right">Starting at ₱1500</h4>
+      </div>
+      <div class="item">
+        <h3>Package F</h3>
+        <h5>2 Clowns</h5>
+        <h5>Game Handling</h5>
+        <h5>Hosting</h5>
+        <h5>Magic Show</h5>
+        <h5>Facepainting</h5>
+        <h5>Giant Bubble Show</h5>
+        <h5>Puppet Show</h5>
+        <h5>Freebies: 10pcs Toypack 10 Balloon with Stick</h5>
+        <h4 class="text-right">Starting at ₱1500</h4>
+      </div>
+    <main>
     </section>
 
     <section class="content-section gallery" id="gallery">
@@ -464,13 +692,16 @@ if (!isset($_SESSION['user_name'])) {
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="First slide">
+            <img class="d-block w-100" src="./img/1.jpg" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="Second slide">
+            <img class="d-block w-100" src="./img/2.jpg" alt="Second slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="./uploads/bday.jpeg" alt="Third slide">
+            <img class="d-block w-100" src="./img/3.jpg" alt="Third slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./img/4.jpg" alt="Third slide">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
