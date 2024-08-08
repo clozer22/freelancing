@@ -186,7 +186,7 @@ if (!isset($_SESSION['user_name'])) {
             <a class="nav-link " href="package.php">Packages</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link active " href="diy.php">DIY Package</a>
+            <a class="nav-link active   " href="diy.php">DIY Package</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="diy_cart.php">Cart</a>

@@ -89,15 +89,13 @@ if (!isset($_SESSION['user_name'])) {
               <img class="imgR" src="<?php echo $imageURL; ?>">
             </div>
             <div class="card_content">
-            <p class="card_text hide"><?php echo $row['Product']; ?></p>
-               <div style="display: flex; justify-content:space-between">
-               
-               <h2 class="card_title">PACKAGE PRICE :</h2>
-                   <h4 class="card_price">₱ <?php echo $row['Price']; ?></h4>
-               </div>      
-               <a type="button" class="btnR card_btn" href="booking_form.php?package=<?php echo $row['id']; ?>" style="text-align:center; text-decoration:none;">BOOK NOW</a>
-       
-               </div>
+              <p class="card_text hide"><?php echo $row['Product']; ?></p>
+              <div style="display: flex; justify-content:space-between">
+                <h2 class="card_title">PACKAGE PRICE :</h2>
+                <h4 class="card_price">₱ <?php echo $row['Price']; ?></h4>
+              </div>      
+                <a type="button" class="btnR card_btn" href="booking_form.php?package=<?php echo $row['id']; ?>" style="text-align:center; text-decoration:none;">BOOK NOW</a>
+            </div>
           </div>
         </li>
         <?php }
