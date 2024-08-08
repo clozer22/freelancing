@@ -364,7 +364,7 @@ $desktop: only screen and (min-width:90em);
 
                 // Query to count the number of items in the cart for the given user
                 $query = $conn->query("
-                        SELECT COUNT(*) as cart_count FROM tbl_cart WHERE id = $user_id
+                        SELECT COUNT(*) as cart_count FROM tbl_cart WHERE id = $user_id AND isSelected = 1
                     ");
 
                 $result = $query->fetch_assoc();
@@ -424,7 +424,7 @@ $desktop: only screen and (min-width:90em);
             </div>
 
             <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Billing address</h4>
+                <h4 class="mb-3">Billing address <?php echo $_SESSION['event_id'] ?></h4>
                 <form class="needs-validation" method="POST" novalidate="">
                     <div class="row">
                         <div class="col-md-6 mb-3">

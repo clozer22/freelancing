@@ -93,7 +93,7 @@ if(!isset($_SESSION['user_name'])){
                <h2 class="card_title">PACKAGE PRICE :</h2>
                    <h4 class="card_price">₱ <?php echo $row['Price']; ?></h4>
                </div>      
-               <a type="button" class="btnR card_btn" href="booking_form.php?package=<?php echo $row['id']; ?>" style="text-align:center; text-decoration:none;">BOOK NOW</a>
+               <a type="button" class="btnR card_btn" href="booking_form.php?package=<?php echo $row['id'];?>&type=booking" style="text-align:center; text-decoration:none;">BOOK NOW</a>
        
                </div>
           </div>

@@ -28,7 +28,7 @@ if (isset($_POST['btn_check_out'])) {
         mysqli_stmt_bind_param($stmt, str_repeat('i', count($selected_ids)), ...$selected_ids);
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: checkout_cart.php");
+            header("Location: booking_form.php?type=cart");
             exit();
         } else {
             echo "Error updating cart: " . mysqli_error($conn);
