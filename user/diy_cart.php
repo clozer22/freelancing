@@ -150,7 +150,7 @@ if (isset($_POST['btn_check_out'])) {
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
                     <form method="POST">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
                             <h3 class="fw-normal mb-0">Shopping Cart</h3>
                             <div>
                                 <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
@@ -210,9 +210,9 @@ if (isset($_POST['btn_check_out'])) {
                             ?>
                             <div class="parent-container">
                                 <div class="mx-auto items-center flex justify-center align-items-center text-center" style="display: flex; justify-content: center; align-items: center;">
-                                    <img src="../img/logo.png" alt="Empty Cart" class="img-fluid" style="height: 400px;">
+                                    <img src="../img/logo.png" alt="Empty Cart" class="img-fluid" style="height: 200px; opacity: 0.3;">
                                 </div>
-                                <h3 class="text-center my-3 mb-3">No DIY Package items are available on your cart!</h3>
+                                <h4 class="text-center my-3 mb-3" style="color: #c5c7d9 ;">No DIY Package items are available on your cart!</h4>
                             </div>
                         <?php
                         }
@@ -227,14 +227,14 @@ if (isset($_POST['btn_check_out'])) {
                                 while ($row = mysqli_fetch_assoc($select)) {
                             ?>
                                     <input type="hidden" name="package_id" value="<?php echo $row['id'] ?>">
-                                    <input type="submit" name="btn_check_out" class="btn btn-success w-100" value="Checkout">
+                                    
                             <?php
                                 }
                             } else {
                                 echo "No records found.";
                             }
                             ?>
-
+                            <input type="submit" name="btn_check_out" class="btn btn-success w-100" value="Checkout">
                     </form>
                 </div>
                 </form>

@@ -176,16 +176,24 @@ if (!isset($_SESSION['user_name'])) {
     }
 
     #carouselExampleControls {
-      width: 80%;
-      height: 700px;
+      width: 60%;
+      height: 600px;
       margin: 0 auto;
       overflow: hidden;
     }
 
     .carousel-inner img {
       width: 100%;
-      height: auto;
-      object-fit: cover;
+      height: 800px;
+      object-fit:fill;
+    }
+    @media (max-width: 400px) {
+      .carousel-inner img {
+        height: 200px;
+      }
+      #carouselExampleControls {
+      width: 100%;
+    }
     }
 
     .th_dark {
@@ -577,7 +585,7 @@ input:nth-of-type(6):checked ~ main#carousel {
     <section class="serv services" id="services">
 
       <div class="service">
-        <div style="display: flex; justify-content: center; width: 300px;">
+        <div style="display: flex; justify-content: center; width: 300px; height: 300px;">
           <img class="promo-images" src="./uploads/paintingPromo.jpg" alt="Balloon Setup">
         </div>
         <div>
@@ -585,8 +593,9 @@ input:nth-of-type(6):checked ~ main#carousel {
           <p>From elegant balloon arches to playful balloon animals, we bring a burst of color to your event.</p>
         </div>
       </div>
+
       <div class="service">
-        <div style="display: flex; justify-content: center; width: 300px;">
+        <div style="display: flex; justify-content: center; width: 300px; height: 300px;">
           <img src="./uploads/partyMatsPromo.jpg" alt="Party Setup">
         </div>
         <div>
@@ -594,8 +603,9 @@ input:nth-of-type(6):checked ~ main#carousel {
           <p>Custom themes, elegant table settings, and complete venue transformations.</p>
         </div>
       </div>
+
       <div class="service">
-        <div style="display: flex; justify-content: center; width: 300px;">
+        <div style="display: flex; justify-content: center; width: 300px; height: 300px;">
           <img class="promo-images" src="./uploads/balPromo.jpg" alt="Balloon Setup">
         </div>
         <div>
@@ -603,8 +613,9 @@ input:nth-of-type(6):checked ~ main#carousel {
           <p>From elegant balloon arches to playful balloon animals, we bring a burst of color to your event.</p>
         </div>
       </div>
+
       <div class="service">
-        <div style="display: flex; justify-content: center; width: 300px;">
+        <div style="display: flex; justify-content: center; width: 300px; height: 300px;">
           <img src="./uploads/photoPromo.jpg" alt="Party Setup">
         </div>
         <div>
@@ -612,6 +623,7 @@ input:nth-of-type(6):checked ~ main#carousel {
           <p>Custom themes, elegant table settings, and complete venue transformations.</p>
         </div>
       </div>
+
     </section>
     <h2 class="text-center">Packages</h2>
     <section class="packCar">
