@@ -38,7 +38,7 @@ if (isset($_POST['btn_check_out'])) {
     if (mysqli_stmt_execute($stmt)) {
         // Redirect to checkout page without error message
         // Initialize variables to handle query results
-        header("Location: booking_form.php?type=cart&isSelected=1");
+        header("Location: booking_form.php?type=cart");
         exit();
     } else {
         echo "Error updating cart: " . mysqli_error($conn);
