@@ -182,7 +182,7 @@ if (isset($_POST['btn_check_out'])) {
                                                 <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
-                                                <input id="form1" min="1" name="quantity[<?php echo $row['cart_id']; ?>]" value="<?php echo $row['Quantity']; ?>" type="number" class="form-control form-control-sm" />
+                                                <input readonly id="form1" min="1" name="quantity[<?php echo $row['cart_id']; ?>]" value="<?php echo $row['Quantity']; ?>" type="number" class="form-control form-control-sm" />
                                                 <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                     <i class="fas fa-plus"></i>
                                                 </button>

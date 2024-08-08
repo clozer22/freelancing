@@ -22,6 +22,7 @@ if (isset($_POST['checkOutForm'])) {
     $total_price = $_POST['total_price'];
     $item_name = $_POST['item_name'];
     $qty = $_POST['quantity'];
+    $cartId = $_POST['cart_id'];
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -40,8 +41,19 @@ if (isset($_POST['checkOutForm'])) {
     ");
 
     if ($insert_form) {
-        echo "Order successfully placed!";
-        header("Location: ../user_dash.php");
+        $update_book_form = mysqli_query($conn, "UPDATE tbl_events_list SET status = 'complete' WHERE event_id = {$_SESSION['event_id']}");
+
+        if ($update_book_form) {
+            $selected_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE id = {$_SESSION['user_id']} AND isSelected = 1");
+
+            if (mysqli_num_rows($selected_cart) > 0) {
+                while ($items = mysqli_fetch_assoc($selected_cart)) {
+                    $delete_itemInCart = mysqli_query($conn, "DELETE FROM tbl_cart WHERE id = {$_SESSION['user_id']} AND isSelected = 1");
+                }
+                echo "Order successfully placed!";
+                header("Location: ../user_dash.php");
+            }
+        }
     } else {
         echo "Error: " . $conn->error;
     }
@@ -351,7 +363,7 @@ $desktop: only screen and (min-width:90em);
 
     <div class="container my-5">
         <div class="py-5 text-center">
-            <h2>Checkout form</h2>
+            <h2>Checkout form </h2>
         </div>
         <div class="row">
             <div class=" col-md-4 order-md-2 mb-4" style="z-index:auto">
@@ -370,12 +382,13 @@ $desktop: only screen and (min-width:90em);
                 $result = $query->fetch_assoc();
                 $cart_count = $result['cart_count'];
 
-                $total = mysqli_query($conn, "SELECT SUM(Price) as Total_Price, product_name, Quantity FROM tbl_cart WHERE id = $user_id");
+                $total = mysqli_query($conn, "SELECT SUM(Price) as Total_Price, product_name, Quantity, cart_id FROM tbl_cart WHERE id = $user_id");
 
                 if ($total && mysqli_num_rows($total) > 0) {
                     $row = mysqli_fetch_assoc($total);
                     $total_price = $row['Total_Price'];
                     $itemName = $row['product_name'];
+                    $cart_id = $row['cart_id'];
                     $qty = $row['Quantity'];
                 } else {
                     $total_price = 0;
@@ -385,17 +398,18 @@ $desktop: only screen and (min-width:90em);
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill"><?php echo $cart_count; ?></span>
                 </h4>
-                <?php
-                include('../database.php');
 
-                $select_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE isSelected = 1 AND id = {$_SESSION['user_id']}");
-                $grand_total = 0;
-                if (mysqli_num_rows($select_cart) > 0) {
-                    while ($row = mysqli_fetch_assoc($select_cart)) {
-                        $imageURL = '../uploads/' . $row["image_url"];
+                <ul class="list-group mb-3 sticky-top">
+                    <?php
+                    include('../database.php');
 
-                ?>
-                        <ul class="list-group mb-3 sticky-top">
+                    $select_cart = mysqli_query($conn, "SELECT * FROM tbl_cart WHERE isSelected = 1 AND id = {$_SESSION['user_id']}");
+                    $grand_total = 0;
+                    if (mysqli_num_rows($select_cart) > 0) {
+                        while ($row = mysqli_fetch_assoc($select_cart)) {
+                            $imageURL = '../uploads/' . $row["image_url"];
+
+                    ?>
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div class="d-flex">
                                     <img src="<?php echo $imageURL ?>" class=" rounded-2" style="height:50px; width: 70px; border-radius: 5px;">
@@ -411,21 +425,23 @@ $desktop: only screen and (min-width:90em);
                                 </div>
 
                             </li>
-
-                            <li class="list-group-item bg-dark text-white d-flex justify-content-between">
-                                <span>Total (USD)</span>
-                                <strong>$20</strong>
-                            </li>
-                        </ul>
-                <?php
+                    <?php
+                        }
                     }
-                }
-                ?>
+                    ?>
+
+                    <li class="list-group-item bg-dark text-white d-flex justify-content-between">
+                        <span>Total (PHP)</span>
+                        <strong>$ <?php echo $total_price ?></strong>
+                    </li>
+                </ul>
+
             </div>
 
             <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Billing address <?php echo $_SESSION['event_id'] ?></h4>
+                <h4 class="mb-3">Billing address </h4>
                 <form class="needs-validation" method="POST" novalidate="">
+                    <input type="hidden" name="cart_id" value="<?php echo $cart_id ?>">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
@@ -439,7 +455,7 @@ $desktop: only screen and (min-width:90em);
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="username">Email</label>
+                        <label for="username">Email </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>

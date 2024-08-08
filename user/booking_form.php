@@ -142,7 +142,6 @@ if (isset($_POST['book_button'])) {
             echo "Failed to insert event.";
         }
     }
-
 }
 
 
@@ -159,8 +158,7 @@ if (isset($_POST['book_button'])) {
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../cssproj/home.css">
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <style>
@@ -185,16 +183,14 @@ if (isset($_POST['book_button'])) {
     <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #42b2cf;">
         <div class="container">
             <a style="opacity: 0; cursor: default; ">Lhenewin Party Solution</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto w-100 justify-content-end">
 
                     <li class="nav-item ">
-                        <a class="nav-link " href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span
-                                class="sr-only"></span></a>
+                        <a class="nav-link " href="../user_dash.php">Welcome - <?php echo $_SESSION['user_name'] ?><span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link " href="userhome.php">Home</a>
@@ -229,8 +225,7 @@ if (isset($_POST['book_button'])) {
             <h1 class="font-weight-bold border-bottom border-dark pb-3">Booking Form</h1>
 
 
-            <input type="text" hidden class="form-control" id="package_id" name="package_id"
-                value="<?php echo htmlspecialchars($package_id); ?>">
+            <input type="text" hidden class="form-control" id="package_id" name="package_id" value="<?php echo htmlspecialchars($package_id); ?>">
 
 
 
@@ -238,14 +233,12 @@ if (isset($_POST['book_button'])) {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="title" class="form-label" name="title">Title:</label>
-                    <input type="text" placeholder="Input Title of event" class="form-control" id="title" name="title"
-                        required>
+                    <input type="text" placeholder="Input Title of event" class="form-control" id="title" name="title" required>
                 </div>
 
                 <div class="col-md-6">
                     <label for="celebrant_name" class="form-label">Celebrant Name</label>
-                    <input type="text" placeholder="Input Celebrant Name" class="form-control" id="celebrant_name"
-                        name="celebrant_name" required>
+                    <input type="text" placeholder="Input Celebrant Name" class="form-control" id="celebrant_name" name="celebrant_name" required>
                 </div>
 
             </div>
@@ -253,31 +246,25 @@ if (isset($_POST['book_button'])) {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="start_datetime" class="form-label">Start Date/Time</label>
-                    <input type="datetime-local" placeholder="Input starting event and time" class="form-control"
-                        id="start_datetime" name="start_datetime" required>
+                    <input type="datetime-local" placeholder="Input starting event and time" class="form-control" id="start_datetime" name="start_datetime" required>
                 </div>
                 <div class="col-md-6">
                     <label for="end_datetime" class="form-label">End Date/Time</label>
-                    <input type="datetime-local" placeholder="Input end event and time" class="form-control"
-                        id="end_datetime" name="end_datetime" required>
+                    <input type="datetime-local" placeholder="Input end event and time" class="form-control" id="end_datetime" name="end_datetime" required>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" placeholder="For more..." id="description" name="description"
-                    rows="3"></textarea>
+                <textarea class="form-control" placeholder="For more..." id="description" name="description" rows="3"></textarea>
             </div>
 
-            <button name="book_button" type="submit" class="bg-primary border-0 text-light font-weight-bold w-100"
-                style="height: 50px;">Submit</button>
+            <button name="book_button" type="submit" class="bg-primary border-0 text-light font-weight-bold w-100" style="height: 50px;">Submit</button>
         </form>
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
