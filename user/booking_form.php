@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_name'])) {
 }
 
 // Initialize variables
-$package_id = 0; // Initialize package_id
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $type = isset($_GET['type']) ? $_GET['type'] : 'booking'; // Default type to 'booking'
@@ -109,47 +108,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->close();
         $conn->close();
-    } elseif ($type === 'cart') {
+        exit();
+    }
+    
+}
+
+if ($_GET['type'] === "cart") {
 
 
-        // Sanitize inputs and set defaults if not provided
-        $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
-        $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
-        $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
-        $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
-        $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
-        $status = 'pending';
-        $color = generateRandomColor();
-        $text_color = '#000000';
-        $user_id = $_SESSION['user_id'];
+    // Sanitize inputs and set defaults if not provided
+    $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
+    $celebrant_name = isset($_POST['celebrant_name']) ? mysqli_real_escape_string($conn, $_POST['celebrant_name']) : '';
+    $start_datetime = isset($_POST['start_datetime']) ? mysqli_real_escape_string($conn, $_POST['start_datetime']) : '';
+    $end_datetime = isset($_POST['end_datetime']) ? mysqli_real_escape_string($conn, $_POST['end_datetime']) : '';
+    $description = isset($_POST['description']) ? mysqli_real_escape_string($conn, $_POST['description']) : '';
+    $status = 'pending';
+    $color = generateRandomColor();
+    $text_color = '#000000';
+    $user_id = $_SESSION['user_id'];
 
-        // Prepare the SQL statement
-        $stmt = $conn->prepare("INSERT INTO tbl_events_list (title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("INSERT INTO tbl_events_list (title, celebrant_name, start_datetime, end_datetime, status, color, text_color, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        if ($stmt === false) {
-            die('Prepare failed: ' . $conn->error);
-        }
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
 
-        // Bind parameters and execute the statement
-        $stmt->bind_param("sssssssss", $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
-        $stmt->execute();
+    // Bind parameters and execute the statement
+    $stmt->bind_param("sssssssss", $title, $celebrant_name, $start_datetime, $end_datetime, $status, $color, $text_color, $description, $user_id);
+    $stmt->execute();
 
-        // Check if the event was inserted successfully
-        if ($stmt->affected_rows > 0) {
-            $event_id = $conn->insert_id;
-            $_SESSION['event_id'] = $event_id;
+    // Check if the event was inserted successfully
+    if ($stmt->affected_rows > 0) {
+        $event_id = $conn->insert_id;
+        $_SESSION['event_id'] = $event_id;
 
-            // Redirect to the checkout form
-            header('Location: checkout_form.php');
-            exit();
-        } else {
-            echo "Failed to insert event.";
-        }
+        // Redirect to the checkout form
+        header('Location: booking_form.php');
+        exit();
+    } else {
+        echo "Failed to insert event.";
     }
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
